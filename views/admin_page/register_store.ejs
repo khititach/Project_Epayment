@@ -1,0 +1,117 @@
+<div class="mt-5 mb-3">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mb-3">
+      <i class="fas fa-user-plus"></i> Register Store</h1>
+      <% include ../partials/messages %>
+      <form action="/admin/register_store_page2" method="POST">
+        <div class="form-group">
+          <label for="storeOwner">Store Owner</label>
+          <input
+            type="text"
+            id="insertStoreOwnerID"
+            name="storeOwner"
+            class="form-control"
+            value=""
+            readonly  
+          />
+        </div>
+        <div class="form-group">
+            <label for="storeNO">Store Number</label>
+            <input
+              type="Number" min="0"
+              id="storeNO"
+              name="storeNO"
+              class="form-control"
+              placeholder="Enter store number"
+              value="<%= typeof storeNO != 'undefined' ? storeNO : '' %>"
+            />
+          </div>
+        <span class="mb-3" id="alertBackstoreNO"></span>
+        <div class="form-group">
+          <label for="name">Store Name</label>
+          <input
+            type="text"
+            id="storeName"
+            name="storeName"
+            class="form-control"
+            placeholder="Enter Store Name"
+            value="<%= typeof storeName != 'undefined' ? storeName : '' %>"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="Enter Email"
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+          />
+        </div>
+        <div class="form-group">
+          <label for="tel">tel.</label>
+          <input
+            type="text"
+            id="tel"
+            name="tel"
+            class="form-control"
+            placeholder="Enter tel"
+            value="<%= typeof tel != 'undefined' ? tel : '' %>"
+          />
+        </div>
+        <div class="text-center">
+              <button type="submit" class="btn btn-primary">
+                      Register
+              </button>
+              <input type="button" class="btn btn-secondary" value="back" onclick="history.back()">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+
+$(document).ready(function(){
+    $('#storeNO').on('change',function(){
+      console.log('Submit storeNO'),
+      $('#storeNO').submit(autoSubmit('#storeNO','storeNO'))
+    });
+  });
+
+  function autoSubmit(inputField,nameInputField) {
+       var val_inputField = $(inputField).val();
+       var name_inputField = nameInputField;
+       console.log("Name input field > "+ name_inputField +' : '+ val_inputField);
+       $.ajax({
+           url: '/admin/register_store_auto_check',
+           type: 'POST',
+           dataType: 'json',
+           data: { nameinputField_regStuPage : name_inputField,
+            data_inputField_regStuPage : val_inputField },
+           success:function(data) {
+               console.log('Send data to js success.');
+               $("#alertBack").html('<span style="color:green;font-size:16px">'+dataBack.responseText +'</span>');
+            },error:function(msgFailureBack){
+                console.log(JSON.stringify(msgFailureBack));
+                if (msgFailureBack.responseText === 'storeNO is already.') {
+                    if (name_inputField === 'storeNO') {
+                        $("#alertBackstoreNO").html('<span style="color:red;font-size:16px">'+msgFailureBack.responseText +'</span>');
+                    }
+                }
+                if (msgFailureBack.responseText === 'storeNO is available.') {
+                    if (name_inputField === 'storeNO') {
+                        $("#alertBackstoreNO").html('<span style="color:green;font-size:16px">'+msgFailureBack.responseText +'</span>');                    }
+                }     
+           }
+       })
+    }
+
+  // var uname
+  var insertStoreOwner = "<%= storeOwner %>";
+  console.log(insertStoreOwner);
+  document.getElementById("insertStoreOwnerID").value = insertStoreOwner;
+    
+</script>

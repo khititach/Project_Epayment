@@ -1,0 +1,88 @@
+<div class="container mt-5" align="center">
+  <div class="row">
+    <div class="col-sm-4">
+        <a href="#income" style="font-size: 50px" onclick="showIncomePage()"><i class="fa fa-home"></i></a>
+    </div>
+    <div class="col-sm-4">
+        <a href="#food" style="font-size: 50px" onclick="showFoodPage()"><i class="fa fa-user"></i></a>
+    </div>
+    <div class="col-sm-4">
+        <a href="#graph" style="font-size: 50px" onclick="showGraphPage()"><i class="fa fa-signal" aria-hidden="true"></i></a>
+    </div>
+  </div>      
+</div>
+
+
+<div class="container card card-body mt-5 mb-3">
+    <div class="form-group ">
+      <h1>Month</h1>
+      <!-- ver.1 -->
+      <input class="date" type="date" id="start" name="start">
+
+      <!-- ver.2 -->
+        <!-- <select class="custom-select">
+          <option selected="">Select Month</option>
+          <option value="1" href="#jan">Jan</option>
+          <option value="2" href="#feb">Feb</option>
+          <option value="3" href="#march">March</option>
+          <option value="4" href="#Apr">Apr</option>
+          <option value="5" href="#May">May</option>
+          <option value="6" href="#Jun">Jun</option>
+          <option value="7" href="#Jul">Jul</option>
+          <option value="8" href="#Aug">Aug</option>
+          <option value="9" href="#Sep">Sep</option>
+          <option value="10" href="#Oct">Oct</option>
+          <option value="11" href="#Nov">Nov</option>
+          <option value="12" href="#Dep">Dep</option>
+        </select> -->
+
+      </div>
+
+      <div id="showDataIncome" style="display: block">
+          <% include ./history_page/income_page %>
+      </div> 
+      <div id="showDataFood" style="display: none">
+          <% include ./history_page/food_page %>
+      </div> 
+      <div id="showDataGraph" style="display: none">
+          <% include ./history_page/graph_page %>
+      </div>  
+           
+    <div class="container ">
+        <a style="float: right;" href="/" class="btn btn-primary" value="back">Back to Homepage</a>
+    </div>
+</div>
+
+
+
+<script>
+
+  var income = document.getElementById('showDataIncome');
+  var food = document.getElementById('showDataFood');
+  var graph = document.getElementById('showDataGraph');
+
+  function showIncomePage() {
+    if (income.style.display === 'none') {
+      income.style.display = 'block';
+      food.style.display = 'none';
+      graph.style.display = 'none';
+    } 
+  }
+
+  function showFoodPage() {
+    if (food.style.display === 'none') {
+      income.style.display = 'none';
+      food.style.display = 'block';
+      graph.style.display = 'none';
+    } 
+  }
+
+  function showGraphPage() {
+    if (graph.style.display === 'none') {
+      income.style.display = 'none';
+      food.style.display = 'none';
+      graph.style.display = 'block';
+    } 
+  }
+
+</script>

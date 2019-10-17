@@ -1,0 +1,143 @@
+<div class=" mt-5 mb-3">
+        <div class="col-md-6 m-auto">
+            <div class="card card-body">
+                <h1 class="text-center mb-3"><i class="fas fa-user-plus"></i> Register </h1>
+                    <% include ../partials/messages %>
+                    <form id="sendDataPath" method="POST">
+                        <!-- Select Role -->
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select class="custom-select form-group" name="role" id="roleselector" onchange="sendPath('sendDataPath',this)">
+                                
+                                <option value="student">Student</option>
+                                <option value="store">Store</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+
+                        <!-- Username & Password -->
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            class="form-control"
+                            placeholder="Enter username"
+                            value="<%= typeof username != 'undefined' ? username : '' %>"
+                          />
+                        <span class="mb-3" id="alertBackusername"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input
+                                type="text"
+                                id="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="Enter password"
+                                value="<%= typeof password != 'undefined' ? password : '' %>"
+                            />
+                        </div>
+                        <!-- Name -->
+                        <div class="form-group ">
+                            <label for="name">Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="form-control"
+                                placeholder="Enter name"
+                                value="<%= typeof name != 'undefined' ? name : '' %>"
+                            />
+                        <span class="mb-3" id="alertBackname"></span>
+                        </div>
+
+                        <!-- --------- submit --------- -->
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">
+                                        Next
+                            </button>
+                            <input type="button" class="btn btn-secondary" value="back" onclick="history.back()">
+                        </div>
+
+
+                    </form>
+            </div>
+        </div>
+    </div>
+
+<script>
+    
+    // auto submit 
+    $(document).ready(function(){
+        $('#roleselector').on('change',function()  {
+            console.log('Submit role')
+            $('#roleselector').submit(autoSubmit('#roleselector','role'));
+        });
+        $('#username').on('change',function()  {
+            console.log('Submit username')
+            $('#username').submit(autoSubmit('#username','username'));
+        });
+        $('#password').on('change',function()  {
+            console.log('Submit password')
+            $('#password').submit(autoSubmit('#password','password'));
+        });
+        $('#name').on('change',function()  {
+            console.log('Submit name')
+            $('#name').submit(autoSubmit('#name','name'));
+        });
+    });
+
+    function autoSubmit(inputField,nameInputField) {
+       var val_inputField = $(inputField).val();
+       var name_inputField = nameInputField;
+       console.log("Name input field > "+ name_inputField +' : '+ val_inputField);
+       $.ajax({
+           url: '/admin/register_user_auto_check',
+           type: 'POST',
+           dataType: 'json',
+           data: { nameinputField_regPage : name_inputField,
+               data_inputField_regPage : val_inputField },
+           success:function(data) {
+               console.log('Send data to js success.');
+               $("#alertBack").html('<span style="color:green;font-size:16px">'+dataBack.responseText +'</span>');
+            },error:function(msgFailureBack){
+                console.log(JSON.stringify(msgFailureBack));
+                if (msgFailureBack.responseText === 'username is already.' || msgFailureBack.responseText === 'name is already.') {
+                    if (name_inputField === 'username') {
+                        $("#alertBackusername").html('<span style="color:red;font-size:16px">'+msgFailureBack.responseText +'</span>');
+                    }
+                    if (name_inputField === 'name') {
+                        $("#alertBackname").html('<span style="color:red;font-size:16px">'+msgFailureBack.responseText +'</span>');
+                    }
+                }
+                if (msgFailureBack.responseText === 'username is available.' || msgFailureBack.responseText === 'name is available.') {
+                    if (name_inputField === 'username') {
+                        $("#alertBackusername").html('<span style="color:green;font-size:16px">'+msgFailureBack.responseText +'</span>');                    }
+                    if (name_inputField === 'name') {
+                        $("#alertBackname").html('<span style="color:green;font-size:16px">'+msgFailureBack.responseText +'</span>');
+                    }
+                }     
+           }
+       })
+    }
+
+    document.getElementById('sendDataPath').action = '/admin/register_student';
+    function sendPath(DataPath,element) {
+        // document.getElementById(DataPath).action = element.value == 'student' ? '/admin/register_student' : null ;
+        // document.getElementById(DataPath).action = element.value == 'store' ? '/admin/register_store' : null ;
+        
+        if (element.value == 'student') {
+            document.getElementById(DataPath).action = '/admin/register_student';
+        }
+        if (element.value == 'store') {
+            document.getElementById(DataPath).action = '/admin/register_store';
+        } 
+        if (element.value == 'admin') {
+            document.getElementById(DataPath).action = '/admin';
+        } 
+    }
+    
+</script>

@@ -1,0 +1,29 @@
+<!-- income page -->
+
+<h2>Income</h2>
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Activity</th>
+        <th scope="col">Deposit</th>
+        <th scope="col">Withdraw</th>
+        <th scope="col">Total</th>
+        <th scope="col">Responsible</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% historyData.reverse().forEach(function(historyData,index) {%>
+          <tr>
+            <td><%= historyData.date.getDate() + "/" + (historyData.date.getMonth()+1) + "/" + historyData.date.getFullYear() %></td>
+            <td><%= historyData.date.getHours() + ":" + historyData.date.getMinutes() + ":" + historyData.date.getSeconds() %></td>
+            <td><%= historyData.activity %></td>
+            <td><%= historyData.deposit %></td>
+            <td><%= historyData.withdraw %></td>
+            <td><%= historyData.total %></td>
+            <td><%= historyData.responsible %></td>
+          </tr>
+          <% } ); %>
+    </tbody>
+  </table>  

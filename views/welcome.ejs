@@ -1,0 +1,10 @@
+<% if (user) {%>
+    <% if (user.role === 'student') {%>
+        <% include ./student_page/student_page %>
+    <%} if (user.role === 'store') {%>
+        <% include ./store_page/store_page %>
+    <%} if (user.role === 'admin') {%>
+        <% include ./admin_page/admin_page %>
+    <%} if (!user.role) {%> 
+        <% include ./index %>
+    <%} }%>

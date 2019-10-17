@@ -1,0 +1,899 @@
+
+<!-- --------- categoty test --------- -->
+<h3 class="text-center"> --------- category show food test ---------</h3>
+<div id="getFoodList"></div>
+<span id="getFoodPrice"></span>
+<input type="button" id="showFoodButton" class="btn btn-primary" value="submit">
+
+
+<h3 class="text-center"> --------- category add food test ---------</h3>
+<div class="card card-body">
+    <div class="form-group">
+        <label for="food_storeNO">Food storeNO</label>
+        <input type="number" id="food_storeNO" name="food_storeNO" class="form-control" placeholder="Enter food food storeNO" value="<%= typeof food_storeNO != 'undefined' ? food_storeNO : '' %>"/>
+    </div>
+    <div class="form-group">
+        <label for="food_name">Food Name</label>
+        <input type="text" id="food_name" name="food_name" class="form-control" placeholder="Enter food name" value="<%= typeof food_name != 'undefined' ? food_name : '' %>"/>
+    </div>
+    <div class="form-group row">
+            <form id="formSelectExtra" class="col-lg-3">
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio1" name="extra" class="custom-control-input" value="true">
+                    <label class="custom-control-label" for="customRadio1">Have extra</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio2" name="extra" class="custom-control-input" value="false" checked="">
+                    <label class="custom-control-label" for="customRadio2">No extra</label>
+                </div>
+
+                <span id="showValueRadio"></span>
+            </form>
+        <div class="col-lg-4">
+            <div class="row" id="normal_price_div" >
+                <span class="col-lg-6 align-self-center">Food Price</span>
+                <input type="text" id="normal_price" name="normal_price"  class="col-lg-6 form-control" placeholder="Enter food price" value="<%= typeof price != 'undefined' ? price : '' %>"/>
+            </div>
+            <div class="row" id="extra_price_div" >   
+                <span class="col-lg-6 align-self-center ">Food Extra Price</span>
+                <input type="text" id="extra_price" name="extra_price"  class="col-lg-6 form-control" placeholder="Enter food price extra" value="<%= typeof price_extra != 'undefined' ? price_extra : '' %>" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="row" id="normal_shotcut_div" >
+                <span class="col-lg-4 align-self-center">Food shotcut</span>
+                <input type="text" id="normal_shotcut" name="normal_price"  class="col-lg-6 form-control" placeholder="Enter food price" value="<%= typeof price != 'undefined' ? price : '' %>"/>
+            </div>
+            <div class="row" id="extra_shotcut_div" >   
+                <span class="col-lg-4 align-self-center">Food shotcut</span>
+                <input type="text" id="extra_shotcut" name="extra_price"  class="col-lg-6 form-control" placeholder="Enter food price extra" value="<%= typeof price_extra != 'undefined' ? price_extra : '' %>" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="food_calories">Food calories</label>
+        <input type="number" id="food_calories" name="food_calories" class="form-control" placeholder="Enter food calories" value="<%= typeof food_calories != 'undefined' ? food_calories : '' %>"/>
+    </div>
+    <div class="form-group">
+        <label for="food_type">Food type</label>
+        <input type="text" id="food_type" name="food_type" class="form-control" placeholder="Enter food type" value="<%= typeof food_type != 'undefined' ? food_type : '' %>"/>
+    </div>
+    <div class="form-group">
+        <span class="align-self-center">Food image</span>
+        <div class="input-group mb-3">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="food_image_url">
+                <label class="custom-file-label" for="food_image_url">Choose file</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+            <input type="button" id="submitFood" class="btn btn-primary" value="submit">
+            <input type="button" id="reset" class="btn btn-secondary" value="reset" >
+    </div>
+
+</div>
+
+
+
+
+<h3 class="text-center mb-5"> --------- category test ---------</h3> 
+
+<h3 class="text-center mb-5"> --------- category page test ---------</h3> 
+<div class="ml-3 mr-3 border" >
+    <div class="row">
+        <div class="col-lg-4"> test 1 </div>
+        <div class="col-lg-8"> 
+            <div> 
+                <span class="ml-auto mr-auto"> Food name </span>
+                <span > Food type </span>
+            </div>
+            <div > 
+                Food price / shotcut / calories
+            </div>
+            <div > 
+                Food extra price / shotcut / calories
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="text-center mb-5"> --------- category page test ---------</h3> 
+
+<!-- test select radio -->
+<form> 
+        <p>Please select your preferred contact method:</p>
+        <div>
+          <input type="radio" id="contactChoice1"
+                 name="contact" value="true">
+          <label for="contactChoice1">Have Extra</label>
+          <input type="radio" id="contactChoice2"
+                 name="contact" value="false">
+          <label for="contactChoice2">No Extra</label>
+        </div>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <pre id="log">
+      </pre>
+<!-- test select radio -->
+
+<script>
+    // test select radio
+// var form = document.querySelector("form");
+// var log = document.querySelector("#log");
+
+// form.addEventListener("change", function(event) {
+//   var data = new FormData(form);
+//   var output = "";
+//   for (const entry of data) {
+//     output = output + entry[0] + "=" + entry[1] + "\r";
+//   };
+//   log.innerText = output;
+//   event.preventDefault();
+// }, false);
+    // test select radio
+
+    $(document).ready(function(){
+        // init page
+        $('#extra_price_div').hide();
+        $('#extra_shotcut_div').hide();
+
+        $('#submitFood').click(function(){
+            console.log('Add food.')
+            newFood();
+        });
+
+        $('#showFoodButton').click(function(){
+            console.log('Show food.')
+            showFood();
+        });
+
+        $('#formSelectExtra').on('change',function(){
+            // console.log('Select extra Ture or False.');
+            selectExtra();
+        })
+
+    });
+
+    // select extra
+    function selectExtra(){
+        var valueExtra = $('.custom-control-input:checked').val();
+        $('#showValueRadio').html("<span>Select extra : "+ valueExtra +"</span>")
+        console.log('Select extra T or F : ' + valueExtra);
+        if (valueExtra == "true") {
+            $('#extra_price_div').show();
+            $('#extra_shotcut_div').show();
+        }
+        if (valueExtra == "false") {
+            $('#extra_price_div').hide();
+            $('#extra_shotcut_div').hide();
+        }
+    }
+
+    // function show food
+    function showFood(){
+        $.ajax({
+            url:'/admin/get_category',
+            type:'GET',
+            dataType:'json',
+            success:function(dataFromServer) {
+                console.log('Show food success : ' + JSON.stringify(dataFromServer));
+                $('#getFoodList').html('All Food: ' + JSON.stringify(dataFromServer));
+                $('#getFoodPrice').html('Food price: ' + JSON.stringify(dataFromServer[0].food_extra.price));
+            },error:function(msgFromServer){
+                console.log('Show food fail.');
+                console.log('Server send : ' + msgFromServer);
+            }
+        })
+    }
+
+    // function add food
+    function newFood(){
+
+    // model food category v1
+        // const new_food = { 
+        //     food_storeNO:$('#food_storeNO').val(),
+        //     food_name:$('#food_name').val(),
+        //     food_extra:{
+        //         price:$('#price').val(),
+        //         extra:$('#customRadio1').val()
+        //     },
+        //     food_calories: $('#food_calories').val(),
+        //     food_type: $('#food_type').val(),
+        //     food_image_url: $('#food_image_url').val(),
+        //     food_shotcut: $('#food_shotcut').val() 
+        // }
+
+     // model food category v2
+        const new_food = { 
+            food_storeNO:$('#food_storeNO').val(),
+            food_name:$('#food_name').val(),
+            food_have_extra:$('.custom-control-input:checked').val(),
+            food_price:{
+                normal_price:$('#normal_price').val(),
+                extra_price:$('#extra_price').val(),
+            },
+            food_calories: $('#food_calories').val(),
+            food_type: $('#food_type').val(),
+            food_image_url: $('#food_image_url').val(),
+            food_shotcut: {
+                normal_shotcut:$('#normal_price').val(),
+                extra_shotcut:$('#extra_price').val(),
+            } 
+        }
+
+        console.log('Food new category : ' + JSON.stringify(new_food));
+        
+        // $.ajax({
+        //     url:'/admin/post_category',
+        //     type:'POST',
+        //     dataType:'json',
+        //     data: { 
+        //         food_storeNO:$('#food_storeNO').val(),
+        //         food_name:$('#food_name').val(),
+        //         food_extra:{
+        //             price:$('#price').val(),
+        //             extra:$('#extra').val()
+        //         },
+        //         food_calories: $('#food_calories').val(),
+        //         food_type: $('#food_type').val(),
+        //         food_image_url: $('#food_image_url').val(),
+        //         food_shotcut: $('#food_shotcut').val() 
+        //     },
+        //     success:function(msgSuccessBack){
+        //         console.log('New food complete.');
+        //         console.log('Server send : ' + msgSuccessBack);
+        //     },error:function(msgErrorBack){
+        //         console.log('New food incomplete.');
+        //     }
+        // })
+
+
+    }
+
+
+</script>
+
+
+
+<!-- --------- sort test --------- -->
+<table class="table table-hover">
+        <thead>
+            <tr>
+                <td>role</td>
+                <td>username</td>
+                <td>name</td>
+                <td>Change Password</td>
+                <td>Remove</td>
+            </tr>
+        </thead>
+        <% datausers.forEach(function(datausers,index) {%>
+        <tr>
+          <td><%= datausers.role %></td>
+          <td><%= datausers.username %></td>
+          <td><%= datausers.name %></td>
+          <td><input type="button" class="btn btn-info trigger" value="change" data-toggle="modal" data-target="#changepass" onclick="setValue('<%= datausers.name %>')"></td>
+          <td><input type="button" class="btn btn-secondary" value="remove" data-toggle="modal" data-target="#removeStore" onclick="setValueremove('<%= datausers.name %>')"></td>
+        </tr>
+        <% } ); %>
+    </table>
+
+<!-- --------- sort test --------- -->
+
+<!-- --------- categoty test --------- -->
+
+<input type="text" class="form-control formcls" id="testdata" placeholder="Enter data">
+<!-- <button id="post_data" class="btn btn-lg btn-block btn-warning">Submit</button> -->
+<div id="select_div"><a href="#" class="btn btn-primary" id="submit_data">Test</a></div>
+<div id="select_div"><a href="#" class="btn btn-primary" id="get_data">Get data</a></div>
+
+<h3>show data after post data</h3>
+<div id="showdata"></div>
+
+
+<div class=" mt-5 mb-3">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body">
+            <h1 class="text-center mb-3"><i class="fas fa-user-plus"></i> Test Page </h1>
+                <form action="/admin/submit_history_test_page" method="POST">
+                    <div class="form-group">
+                        <label for="username">student id</label>
+                        <input
+                        type="text"
+                        id="stuID"
+                        name="stuID"
+                        class="form-control"
+                        placeholder="Enter stuID"
+                        value="<%= typeof stuID != 'undefined' ? stuID : '' %>"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">activity</label>
+                        <input
+                            type="text"
+                            id="activity"
+                            name="activity"
+                            class="form-control"
+                            placeholder="Enter activity"
+                            value="<%= typeof activity != 'undefined' ? activity : '' %>"
+                        />
+                    </div>
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="name">deposit</label>
+                        <input
+                            type="number"
+                            id="deposit"
+                            name="deposit"
+                            class="form-control"
+                            placeholder="Enter deposit"
+                            value="<%= typeof deposit != 'undefined' ? deposit : '' %>"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                            <label for="name">withdraw</label>
+                            <input
+                                type="number"
+                                id="withdraw"
+                                name="withdraw"
+                                class="form-control"
+                                placeholder="Enter withdraw"
+                                value="<%= typeof withdraw != 'undefined' ? withdraw : '' %>"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                                <label for="name">total</label>
+                                <input
+                                    type="number"
+                                    id="total"
+                                    name="total"
+                                    class="form-control"
+                                    placeholder="Enter total"
+                                    value="<%= typeof total != 'undefined' ? total : '' %>"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                    <label for="name">responsible</label>
+                                    <input
+                                        type="text"
+                                        id="responsible"
+                                        name="responsible"
+                                        class="form-control"
+                                        placeholder="Enter responsible"
+                                        value="<%= typeof responsible != 'undefined' ? responsible : '' %>"
+                                    />
+                                </div>
+
+                    <!-- --------- submit --------- -->
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                                    Next
+                        </button>
+                        <input type="button" class="btn btn-secondary" value="back" onclick="history.back()">
+                    </div>
+
+
+                </form>
+        </div>
+    </div>
+</div>
+
+<!-- -------------store test ----------------- -->
+
+<div class=" mt-5 mb-3">
+        <div class="col-md-6 m-auto">
+            <div class="card card-body">
+                <h1 class="text-center mb-3"><i class="fas fa-user-plus"></i> Test Page </h1>
+                    <form action="/admin/submit_history_test_page2" method="POST">
+                        <div class="form-group">
+                            <label for="username">storeNO</label>
+                            <input
+                            type="text"
+                            id="storeNO"
+                            name="storeNO"
+                            class="form-control"
+                            placeholder="Enter storeNO"
+                            value="<%= typeof storeNO != 'undefined' ? storeNO : '' %>"
+                          />
+                        </div>
+                        <div class="form-group">
+                                <label for="username">storeOwn</label>
+                                <input
+                                type="text"
+                                id="storeOwn"
+                                name="storeOwn"
+                                class="form-control"
+                                placeholder="Enter storeOwn"
+                                value="<%= typeof storeOwn != 'undefined' ? storeOwn : '' %>"
+                              />
+                            </div>
+                        <div class="form-group">
+                            <label for="password">activity</label>
+                            <input
+                                type="text"
+                                id="activity"
+                                name="activity"
+                                class="form-control"
+                                placeholder="Enter activity"
+                                value="<%= typeof activity != 'undefined' ? activity : '' %>"
+                            />
+                        </div>
+                        <!-- Name -->
+                        <div class="form-group">
+                            <label for="name">deposit</label>
+                            <input
+                                type="number"
+                                id="deposit"
+                                name="deposit"
+                                class="form-control"
+                                placeholder="Enter deposit"
+                                value="<%= typeof deposit != 'undefined' ? deposit : '' %>"
+                            />
+                        </div>
+    
+                            <div class="form-group">
+                                    <label for="name">total</label>
+                                    <input
+                                        type="number"
+                                        id="total"
+                                        name="total"
+                                        class="form-control"
+                                        placeholder="Enter total"
+                                        value="<%= typeof total != 'undefined' ? total : '' %>"
+                                    />
+                                </div>
+                        <!-- --------- submit --------- -->
+    
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">
+                                        Next
+                            </button>
+                            <input type="button" class="btn btn-secondary" value="back" onclick="history.back()">
+                        </div>
+    
+    
+                    </form>
+            </div>
+        </div>
+    </div>
+
+
+<!-- <div class=" mt-5 mb-3">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body">
+            <h1 class="text-center mb-3"><i class="fas fa-user-plus"></i> Test Page </h1>
+                <form action="/admin/submit_history_test_page" method="POST">
+                    <div class="form-group">
+                        <label for="username">student id</label>
+                        <input
+                        type="text"
+                        id="stuID"
+                        name="stuID"
+                        class="form-control"
+                        placeholder="Enter stuID"
+                        value="<%= typeof stuID != 'undefined' ? stuID : '' %>"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">activity</label>
+                        <input
+                            type="text"
+                            id="activity_student"
+                            name="activity_student"
+                            class="form-control"
+                            placeholder="Enter activity_student"
+                            value="<%= typeof activity_student != 'undefined' ? activity_student : '' %>"
+                        />
+                    </div>
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="name">deposit</label>
+                        <input
+                            type="number"
+                            id="deposit_student"
+                            name="deposit_student"
+                            class="form-control"
+                            placeholder="Enter deposit_student"
+                            value="<%= typeof deposit_student != 'undefined' ? deposit_student : '' %>"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                            <label for="name">withdraw</label>
+                            <input
+                                type="number"
+                                id="withdraw_student"
+                                name="withdraw_student"
+                                class="form-control"
+                                placeholder="Enter withdraw_student"
+                                value="<%= typeof withdraw_student != 'undefined' ? withdraw_student : '' %>"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                                <label for="name">total</label>
+                                <input
+                                    type="number"
+                                    id="total_student"
+                                    name="total_student"
+                                    class="form-control"
+                                    placeholder="Enter total_student"
+                                    value="<%= typeof total_student != 'undefined' ? total_student : '' %>"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                    <label for="name">responsible</label>
+                                    <input
+                                        type="text"
+                                        id="responsible"
+                                        name="responsible"
+                                        class="form-control"
+                                        placeholder="Enter responsible"
+                                        value="<%= typeof responsible != 'undefined' ? responsible : '' %>"
+                                    />
+                                </div>
+                    <!-- -------------store test ----------------- -->
+                            <div class="form-group">
+                            <label for="username">storeNO</label>
+                            <input
+                            type="text"
+                            id="storeNO"
+                            name="storeNO"
+                            class="form-control"
+                            placeholder="Enter storeNO"
+                            value="<%= typeof storeNO != 'undefined' ? storeNO : '' %>"
+                          />
+                        </div>
+                        <div class="form-group">
+                                <label for="username">storeOwn</label>
+                                <input
+                                type="text"
+                                id="storeOwn"
+                                name="storeOwn"
+                                class="form-control"
+                                placeholder="Enter storeOwn"
+                                value="<%= typeof storeOwn != 'undefined' ? storeOwn : '' %>"
+                              />
+                            </div>
+                        <div class="form-group">
+                            <label for="password">activity</label>
+                            <input
+                                type="text"
+                                id="activity_store"
+                                name="activity_store"
+                                class="form-control"
+                                placeholder="Enter activity_store"
+                                value="<%= typeof activity_store != 'undefined' ? activity_store : '' %>"
+                            />
+                        </div>
+                        <!-- Name -->
+                        <div class="form-group">
+                            <label for="name">deposit</label>
+                            <input
+                                type="number"
+                                id="deposit_store"
+                                name="deposit_store"
+                                class="form-control"
+                                placeholder="Enter deposit_store"
+                                value="<%= typeof deposit_store != 'undefined' ? deposit_store : '' %>"
+                            />
+                        </div>
+    
+                            <div class="form-group">
+                                    <label for="name">total</label>
+                                    <input
+                                        type="number"
+                                        id="total_store"
+                                        name="total_store"
+                                        class="form-control"
+                                        placeholder="Enter total_store"
+                                        value="<%= typeof total_store != 'undefined' ? total_store : '' %>"
+                                    />
+                                </div>
+                    <!-- --------- submit --------- -->
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                                    Next
+                        </button>
+                        <input type="button" class="btn btn-secondary" value="back" onclick="history.back()">
+                    </div>
+
+
+                </form>
+        </div>
+    </div>
+</div> 
+
+
+<!-- <div class="col-lg-5 mr-auto" >
+    <form name="form-topup">
+        <div class="card card-body">
+            <h1 class="text-center" style="color: black">Top-up</h1>
+            <h3 style="color: black">ID Card</h3>
+            <table>
+                <tr>
+                  <td>
+                    <div class="form-group m-auto"> 
+                      <input class="form-control form-control-lg" type="text" name="idcard" id="checkInputIDC" placeholder="ID card" id="inputLarge" >
+                    </div>
+                  </td>
+                  <td>
+                    <div style="margin-left: 10px">
+                        <button type="submit" class="btn btn-info" id="checkIDCButton" onclick="return checkIDcard()">Check</button>
+                    </div>
+                  </td>
+                </tr>
+            </table>
+        </div>
+    </form>  
+</div> -->
+
+
+<div class="container">
+        <h1>A demo of jQuery $.post and Bootstrap Form data</h1>
+            <form class="form-horizontal" role="form">
+              <div class="form-group">
+                <label for="name1" class="col-sm-2 control-label">Name:</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control formcls" id="postname" placeholder="Enter Your Full Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="gender1" class="col-sm-2 control-label">Gender:</label>
+                <div class="col-sm-2">
+                <select class="form-control formcls" id="postgender">
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>          
+                  
+                </div>
+              </div>      
+              <div class="form-group">
+                <label for="email1" class="col-sm-2 control-label">Email:</label>
+                <div class="col-sm-5">
+                  <input type="email" class="form-control formcls" id="postemail" placeholder="Enter Email">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password1" class="col-sm-2 control-label">Password:</label>
+                <div class="col-sm-3">
+                  <input type="password" class="form-control formcls" id="postpassword" placeholder="Password here">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="address1" class="col-sm-2 control-label">Address:</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control formcls" id="postaddress" placeholder="Full Address">
+                </div>
+              </div>            
+        
+            </form>
+           </div> 
+        <div class="col-sm-offset-2 col-sm-5">   
+        <button id="postdata" class="btn btn-lg btn-block btn-warning">Create Account</button>
+        </div><br /><br /><br />
+        <h3 id="postdiv"><h3>You entered following data!</h3></h3>
+
+        <h3 id="postdiv"><h3>------------------------------!</h3></h3>
+        <!-- <div id="select_div"><a href="#" class="btn btn-primary" id="select_link">Test</a></div> -->
+   
+        <input type="text" class="form-control formcls" id="testdata" placeholder="Enter data">
+        <!-- <button id="post_data" class="btn btn-lg btn-block btn-warning">Submit</button> -->
+        <div id="select_div"><a href="#" class="btn btn-primary" id="submit_data">Test</a></div>
+        <!-- <div id="select_div"><a href="#" class="btn btn-primary" id="get_data">Get data</a></div> -->
+
+<script type="text/javascript">
+
+    // auto submit ajax
+    $(document).ready(function(){
+        $('#testdata').on('change',function(){
+            console.log('submit');
+            // $('#testdata').submit(autoSubmit);
+
+            var post_data_input = $('#testdata').val();
+            $.ajax({
+                url: '/admin/postdata',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { data :  post_data_input},
+                    success: (data) => {
+                        console.log('ajax: post success.' + JSON.stringify(data));
+                        $.each(data, (index, element) => {
+                            $('#showdata').html('users: ' + element.date);
+                        })
+                    },
+                    error:(errDataback) => {
+                        console.log('ajax: post error > ' + JSON.stringify(errDataback));
+                        $('#showdata').html('Not found');
+                    } 
+            })
+        })
+        // $('#testdata').each(function() { 
+        //     $(this).on('change', function () {
+        //         console.log('submit');
+        //         $('#testdata').submit(autoSubmit);
+        //         // Do submission stuff, submit form
+        //     });
+        // });
+
+    });
+
+    function autoSubmit(){
+        var post_data_input = $('#testdata').val();
+        $.ajax({
+            url: '/admin/postdata',
+                type: 'POST',
+                dataType: 'json',
+                data: { data :  post_data_input},
+                success: (data) => {
+                    console.log('ajax: post success.' + JSON.stringify(data));
+                    $.each(data, (index, element) => {
+                        $('#showdata').html('users: ' + element.date);
+                    })
+                },
+                error:(err) => {
+                    console.log('ajax: post error > ' + JSON.stringify(errDataback));
+                    $('#showdata').html('users: ' + errDataback);
+                } 
+        })
+    }
+
+    // window.onload = function() {
+    //     setInterval(autoSubmit, 1500);
+    // }
+
+
+
+    //-------------------- post data ajax --------------------------
+    // $(document).ready(function(){
+    //     $('#submit_data').click(function() {
+    //         var post_data_input = $('#testdata').val();
+            
+    //         console.log("ID card : " + post_data_input);
+
+    //         $.ajax({
+    //             url: '/admin/postdata',
+    //             type: 'POST',
+    //             dataType: 'json',
+    //             data: { data :  post_data_input},
+    //             success: (data) => {
+    //                 console.log('ajax: post success.' + JSON.stringify(data));
+    //                 $.each(data, (index, element) => {
+    //                     $('#showdata').html('users: ' + element.date);
+    //                 })
+    //             },
+    //             error:(err) => {
+    //                 console.log('ajax: post error > ' + JSON.stringify(err));
+    //             } 
+    //         });
+
+    //         // $.ajax({
+    //         //     url: '/admin/postdata',
+    //         //     type: 'GET',
+    //         //     dataType: 'json',
+    //         //     success: (data) => {
+    //         //         console.log('ajax success.' + JSON.stringify(data));
+    //         //         $('#showdata').html('All users: ' + JSON.stringify(data));
+    //         //     },
+    //         //     error:(err) => {
+    //         //         console.log('ajax: get error > ' + err);
+    //         //     }
+    //         // });
+    //     });
+    // });
+    //-------------------- post data ajax --------------------------
+
+    //-------------------- date --------------------------
+        // get date
+        // var getDate = ' userHistory.date'
+        // var DateFormat = getDate.getFullYear() +'-'+ (getDate.getMonth()+1)+'-'+getDate.getDate();
+        // document.getElementById('getDate').innerHTML = DateFormat;
+        // current time date 
+        // var date = new Date();
+        // var currentDate = date.toISOString().slice(0,10);
+        // var currentTime = date.getHours() + ':' + date.getMinutes();
+        // var currentDateTime = date.toLocaleString();
+        // document.getElementById('currentDate').value = currentDate;
+        // document.getElementById('currentTime').value = currentTime;
+        
+        // current time date  v2
+        // var today = new Date();
+        // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        // var dateTimev2 = date+' / '+time;
+        // document.getElementById('dateTimev2').innerHTML = dateTimev2;
+        // document.getElementById('dateTimev2').value = dateTimev2;
+    
+        // current time date  v3
+        // var today = new Date();
+        // var dateTimev3 = today.toLocaleString();
+        // document.getElementById('dateTimev3').innerHTML = dateTimev3;
+        // document.getElementById('dateTimev3').value = dateTimev3;
+        // 
+    //-------------------- date --------------------------
+
+
+    //-------------------- post date --------------------------
+
+    //     $(document).ready(function(){
+    //         $("#postdata").click(function(){ 
+                
+    //             postname=$("#postname").val();
+    //             postgender=$("#postgender").val();
+    //             postemail=$("#postemail").val();
+    //             postpass=$("#postpassword").val();
+    //             postaddress=$("#postaddress").val();
+                
+    //             var data = {name:postname, gender:postgender, email:postemail, password:postpass, address:postaddress };
+    //             // alert(postname)
+                    
+    //             $.post({
+    //                 url: "http://localhost:3000/admin/topup",
+    //                 type: 'POST',
+    //                 contentType: 'application/json',
+    //                 data: JSON.stringify(data),
+    //                 success: function(data){ 
+    //                     console.log(data);
+    //                     console.log(JSON.stringify(data));
+    //                 }
+    //         });
+    //     });
+    // });
+    //-------------------- post data --------------------------
+
+    //-------------------- post data 2  --------------------------
+    // $(function(){				
+    //             $('#post_data').click(function(){
+    //                 // e.preventDefault();
+    //                 console.log('post_data clicked');
+    //                 console.log($('#testdata').val());
+    //                 // alert($('#testdata').val()) ;
+    //                 var url = 'http://localhost:5000/admin/topup'
+	// 				var data_post = $('#testdata').val();
+	// 				// data.title = "title";
+    //                 // data.message = "message";
+                    
+    //                 alert(data_post);
+    //                 console.log(data);
+
+	// 				$.ajax({
+	// 					type: 'POST',
+	// 			        contentType: 'application/json',
+    //                     url: '/send_save',
+    //                     dataType: "json",
+    //                     cache: false,
+    //                     data: {data : data_post},
+    //                     complete: function() {
+    //                     //called when complete
+    //                     console.log('process complete');
+    //                     },
+    //                     success: function(data) {
+    //                         console.log(data);
+    //                         console.log('process sucess');
+    //                     },
+
+    //                     error: function() {
+    //                         console.log('process error');
+    //                     },						
+    //                     success: function(data) {
+    //                         console.log('success');
+    //                         alert('success');
+    //                         console.log(JSON.stringify(data));
+    //                     }
+    //                 });
+    //             });				
+    //         });
+
+    //-------------------- post data 2  --------------------------
+</script>

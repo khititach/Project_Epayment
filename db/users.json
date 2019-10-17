@@ -1,0 +1,6 @@
+{"_id":{"$oid":"5d57e5619158110cac43c073"},"role":"admin","username":"admin","password":"$2a$10$vATPJUQuu1gs.8KBulw/3uXHjpe68plJ/ps0b0mITIAOg983bUpQS","name":"Thanos","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d79b1059b25333388a521cc"},"role":"student","username":"000001","password":"$2a$10$TfaLebgr012uFa7JRy2bDun6HHx8NPQCW84CZYgJCv..HO0rtfup.","name":"khititach kamjohn","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d79b155640b3d240838dc4e"},"role":"student","username":"000002","password":"$2a$10$SwdC.pvymeScop.L11WQyOYP2bcskkMVAJG4ruplEib3eiSaNrTkC","name":"kanchanaporn kusonchotikul","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d79b1b4cb41e90b343df667"},"role":"student","username":"000003","password":"$2a$10$QecEtSvNT7xdcweo2V6w8ubUjAzU6HKtjAwBYLD2aFQ4kq0iwwV1K","name":"กิตติธัช กําจร","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d7af71926d32e1050e33828"},"role":"store","username":"999991","password":"$2a$10$eYkX17rVma0NBjtHKdxJHuC9ALwHc2692IdEep92T2zUpS6gmCzSW","name":"payut","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d7afaa6cc7b621674e96f09"},"role":"store","username":"999992","password":"$2a$10$gg.YNIQJJE/XCcTB5TGUx.yij6gebFf88nwOeX5kz8KmysKMoKRLq","name":"pawit","__v":{"$numberInt":"0"}}

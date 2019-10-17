@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5d79b1179b25333388a521cd"},"uname":"khititach kamjohn","idcard":"00000001","sex":"male","stuID":"00001","tel":"0979242410","email":"khititach@email.com","money":{"$numberInt":"0"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d79b15b640b3d240838dc4f"},"uname":"kanchanaporn kusonchotikul","idcard":"00000002","sex":"female","stuID":"00002","tel":"0931274428","email":"kanchanapornk58@email.nu.ac.th","money":{"$numberInt":"0"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d79b1c1cb41e90b343df668"},"uname":"กิตติธัช กําจร","idcard":"00000003","sex":"male","stuID":"00003","tel":"0845771227","email":"kyouchan2093@gmail.com","money":{"$numberInt":"0"},"__v":{"$numberInt":"0"}}

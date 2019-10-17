@@ -1,0 +1,148 @@
+<div class=" mt-5 mb-3">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3">
+        <i class="fas fa-user-plus"></i> Register Student</h1>
+        <% include ../partials/messages %>
+        <form action="/admin/register_student_page2" method="POST">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input 
+              type="text"
+              id="insertUnameID"
+              name="uname"
+              class="form-control"
+              value=""
+              readonly   
+            />
+          </div>
+            <div class="form-group">
+                <label for="name">ID Card</label>
+                <input
+                  type="text"
+                  id="idcard"
+                  name="idcard"
+                  class="form-control"
+                  placeholder="Enter ID Card"
+                  value="<%= typeof idcard != 'undefined' ? idcard : '' %>"
+                />
+            </div>
+          <span class="mb-3" id="alertBackidcard"></span>
+          <div class="form-group">
+            <label for="sex">Sex</label>
+              <select class="custom-select form-group" name="sex">
+                <option >Choose sex</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+          </div>
+          <div class="form-group">
+            <label for="stuID">Stundent ID</label>
+            <input
+              type="text"
+              id="stuID"
+              name="stuID"
+              class="form-control"
+              placeholder="Enter Stundent ID"
+              value="<%= typeof stuID != 'undefined' ? stuID : '' %>"
+              maxlength="5"
+            />
+          </div>
+          <span class="mb-3" id="alertBackstuID"></span>
+          <div class="form-group">
+            <label for="tel">Tel.</label>
+            <input
+              type="text"
+              id="tel"
+              name="tel"
+              class="form-control"
+              placeholder="Enter Phone number"
+              value="<%= typeof tel != 'undefined' ? tel : '' %>"
+              maxlength="10"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="Enter Email"
+              value="<%= typeof email != 'undefined' ? email : '' %>"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="hidden"
+              id="money"
+              name="money"
+              class="form-control"
+              value="0"
+              readonly
+            />
+          </div>
+          <div class="text-center">
+                <button type="submit" class="btn btn-primary">
+                        Register
+                </button>
+                <input type="button" class="btn btn-secondary" value="back" onclick="history.back()">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script>
+
+  $(document).ready(function(){
+    $('#idcard').on('change',function(){
+      console.log('Submit idcard'),
+      $('#idcard').submit(autoSubmit('#idcard','idcard'))
+    });
+    $('#stuID').on('change',function(){
+      console.log('Submit idcard'),
+      $('#stuID').submit(autoSubmit('#stuID','stuID'))
+    });
+  });
+
+  function autoSubmit(inputField,nameInputField) {
+       var val_inputField = $(inputField).val();
+       var name_inputField = nameInputField;
+       console.log("Name input field > "+ name_inputField +' : '+ val_inputField);
+       $.ajax({
+           url: '/admin/register_student_auto_check',
+           type: 'POST',
+           dataType: 'json',
+           data: { nameinputField_regStuPage : name_inputField,
+            data_inputField_regStuPage : val_inputField },
+           success:function(data) {
+               console.log('Send data to js success.');
+               $("#alertBack").html('<span style="color:green;font-size:16px">'+dataBack.responseText +'</span>');
+            },error:function(msgFailureBack){
+                console.log(JSON.stringify(msgFailureBack));
+                if (msgFailureBack.responseText === 'idcard is already.' || msgFailureBack.responseText === 'stuID is already.') {
+                    if (name_inputField === 'idcard') {
+                        $("#alertBackidcard").html('<span style="color:red;font-size:16px">'+msgFailureBack.responseText +'</span>');
+                    }
+                    if (name_inputField === 'stuID') {
+                        $("#alertBackstuID").html('<span style="color:red;font-size:16px">'+msgFailureBack.responseText +'</span>');
+                    }
+                }
+                if (msgFailureBack.responseText === 'idcard is available.' || msgFailureBack.responseText === 'stuID is available.') {
+                    if (name_inputField === 'idcard') {
+                        $("#alertBackidcard").html('<span style="color:green;font-size:16px">'+msgFailureBack.responseText +'</span>');                    }
+                    if (name_inputField === 'stuID') {
+                        $("#alertBackstuID").html('<span style="color:green;font-size:16px">'+msgFailureBack.responseText +'</span>');
+                    }
+                }     
+           }
+       })
+    }
+
+  // var uname
+  var insertUname = "<%= uname %>";
+  console.log(insertUname);
+  document.getElementById("insertUnameID").value = insertUname;
+    
+</script>

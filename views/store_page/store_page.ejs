@@ -1,0 +1,205 @@
+<div class="container">
+        <div class="row mt-5">
+          <div class="col-lg-4">
+            <div class="card card-body text-center mb-3">
+              <h2 style="color: black">Store own</h2>
+              <h2><%= user.name %></h2>
+              <h2 style="color: black">Store NO.</h2>
+              <h2><%= StoreDataFound.storeNO %></h2>
+            </div>
+            <div class="card card-body text-center mb-3">
+                <h2 style="color: black">Store Report</h2>
+                <a class="btn btn-primary" href="/store/store_report" v>Report</a>
+            </div>
+            <div class="card card-body text-center mb-3">
+                <h2 style="color: black">Store Category</h2>
+                <a class="btn btn-primary" href="/store/store_categoty">Category</a>
+            </div>
+          </div>     
+          
+    <div class="col-lg-8 mb-5">
+      <div class="card card-body ml-3">
+        <div class="row" style="margin-right:1%">
+          <h1 class="text-center col-lg-8" style="color: black">Money Box</h1>
+          <span class="text-center col-lg-4 card card-body" id="buystatus" style="font-size: 20px;color:blue;padding: 2% 1% 2% 1%">[Buy status]</span>
+        </div>
+          <!-- <form action=""> -->
+              <div class="form-group mt-3">
+                  <h3 style="color: black">ID Card</h3>
+                  <table>
+                    <tr>
+                      <td>
+                        <div class="form-group m-auto" > 
+                          <input class="form-control form-control-lg" type="text" placeholder="ID card" id="checkInputIDC">
+                        </div>
+                      </td>
+                      <td>
+                        <div style="margin-left: 10px">
+                          <button type="submit" class="btn btn-info" id="checkIDCButton">Check</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                  
+
+                  
+                  <div style="font-size: 30px;" class="mb-3 mt-3">
+                    <h3 style="color: black">Detail</h3>
+                        <table style="margin-left: 10px">
+                          <tr>
+                            <td>Student ID</td>
+                            <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_ID" value=""></td>
+                          </tr>
+                          <tr>
+                            <td>Name</td>
+                            <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_name" value=""></td>
+                          </tr>
+                          <tr>
+                            <td>Sex</td>
+                            <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_sex" value=""></td>
+                          </tr>
+                          <tr>
+                            <td>Money</td>
+                            <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_Money" value=""></td>
+                          </tr>
+                        </table>
+                  </div>
+                  <h3 style="color: black">Input price</h3>
+                  <div class="form-group">
+                    <div class="input-group mb-3" >
+                      <input type="number" style="font-size: 50px;" id="inputprice" class="form-control" placeholder="input price" min="0" aria-label="Amount (to the nearest baht)" readonly>
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">฿</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <input type="button" id="submitPriceButton" style="font-size: 30px" class="btn btn-primary" value="คิดเงิน">
+                    <input type="button" id="resetButton" style="font-size: 30px" class="btn btn-secondary" value="reset">
+                  </div>
+              </div>
+            </div>
+          <!-- </form> -->
+      </div>
+    </div>
+          
+
+<script>
+
+  window.scrollTo(0,160);
+  
+  $(document).ready(function(){
+
+    $("#checkInputIDC").select();
+
+    $("#checkInputIDC").keyup(function(event) {
+      if (event.keyCode === 13) {
+        $("#checkIDCButton").click();
+      }
+      if (event.keyCode === 106) {
+        $("#resetButton").click();
+        $("#checkIDCButton").attr("disabled",false); 
+      }
+    });
+
+    $("#inputprice").keyup(function(event) {
+      if (event.keyCode === 13) {
+        $("#submitPriceButton").click();
+      }
+      if (event.keyCode === 106) {
+        $("#resetButton").click();
+        $("#checkIDCButton").attr("disabled",false); 
+      }
+    });
+
+    $("#resetButton").click(function() {
+        $('#student_ID').val('');
+        $('#student_name').val('');
+        $('#student_sex').val('');
+        $('#student_Money').val('');
+        $("#checkInputIDC").val('');
+        $("#inputprice").val('');
+        $("#checkInputIDC").select();
+        $("#inputprice").attr('readonly',true);
+    });
+
+    $('#checkIDCButton').click(function(){
+      var Val_checkIDC = $('#checkInputIDC').val();
+      if (Val_checkIDC === '') {
+        alert('Please input id card or student id.')
+      } else {
+        // console.log('ID card or student id : ' + Val_checkIDC);
+        SubmitCheck(Val_checkIDC);
+      }
+    });
+
+    $('#submitPriceButton').click(function(){
+      var Val_price = $('#inputprice').val();
+      if (Val_price === '') {
+        alert('Please input price.')
+      } else {
+        // console.log('ID card or student id : ' + Val_checkIDC);
+        SubmitPrice(Val_price);
+      }
+    });
+
+  });
+
+  function SubmitCheck(IDcardOrStuID){
+    console.log('ID card or student id : ' + IDcardOrStuID);
+    $("#checkIDCButton").attr("disabled",true);  
+    $.ajax({
+      url:'/store/check_student_profile',
+      type:'POST',
+      dataType:'json',
+      data:{ idcardorstuid : IDcardOrStuID },
+      success:function(dataBack){
+        console.log('Post data success.');
+        console.log('Found student data : ' + JSON.stringify(dataBack));
+
+        $('#student_ID').val(JSON.parse(JSON.stringify(dataBack.stuID)));
+        $('#student_name').val(JSON.parse(JSON.stringify(dataBack.uname)));
+        $('#student_sex').val(JSON.parse(JSON.stringify(dataBack.sex)));
+        $('#student_Money').val(JSON.parse(JSON.stringify(dataBack.money)));
+        $("#inputprice").select();
+        $("#inputprice").attr('readonly',false);
+      },error:function(msgError){
+        console.log('Post data failure.');
+        console.log('Msg error : ' + JSON.stringify(msgError));
+      }
+    })
+  };
+
+  var delay = 2500;
+  function SubmitPrice(InputPrice) {
+    console.log('Price : ' + InputPrice);
+    // $("#checkIDCButton").attr("disabled",true);
+    $.ajax({
+      url: '/store/buy_item',
+      type: 'POST',
+      dataType: 'json',
+      data: { getPrice : InputPrice },
+      success:function(databack){
+        console.log('Post data success.');
+        console.log('Message back : ' + databack);
+        $('#buystatus').html('<span style="color:black;background-color: lime;border-radius: 5px;">'+databack+'</span>')
+        setTimeout(function() {
+          $('#buystatus').html('[Buy status]');
+        },delay)
+      },error:function(msgError){
+        console.log('Post data failure.');
+        console.log('Message error back : ' + JSON.stringify(msgError));
+        $('#buystatus').html('<span style="color:white;background-color: red;border-radius: 5px;">'+JSON.stringify(msgError.responseText)+'</span>')
+        setTimeout(function() {
+          $('#buystatus').html('[Buy status]');
+        },delay)
+      }
+    })
+    $("#resetButton").click();
+    $("#checkInputIDC").select();
+    $("#checkIDCButton").attr("disabled",false);  
+    
+
+  };
+
+</script>
