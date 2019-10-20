@@ -31,27 +31,3 @@ var modelStore = mongoose.model("Storehistory",userSchemaStore);
 
 module.exports = { modelStudent:modelStudent,
                     modelStore:modelStore };
-
-
-
-// Model student history
-// const userSchema = new Schema({
-//     // student side
-//     stuID:{ type: String },
-//     date:{ type: Date, default: Date.now },
-//     // time : { type : String},
-//     activity_student:{ type:String },
-//     deposit_student:{ type:Number },
-//     withdraw_student:{ type:Number },
-//     total_student:{ type:Number },
-//     responsible:{ type:String },
-//     // store side
-//     storeNO:{ type: String, require: true , unique:true },
-//     storeOwn:{ type: String, require: true },
-//     // date:{ type: Date, default: Date.now },
-//     activity_store:{ type:String },
-//     deposit_store:{ type:Number },
-//     total_store:{ type:Number }
-// });
-
-// module.exports = mongoose.model("history",userSchema);
