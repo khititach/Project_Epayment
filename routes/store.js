@@ -7,6 +7,7 @@ const User = require('../model/user');
 const Model_student = require('../model/model_student');
 const Model_store = require('../model/model_store');
 const Modelhistory = require('../model/model_history');
+const Model_Category = require('../model/model_category');
 
     // Report Page
 router.get('/store_report',(req, res) => {
@@ -14,8 +15,27 @@ router.get('/store_report',(req, res) => {
 });
 
     // Category Page
-router.get('/store_categoty',(req, res) => {
-    res.render('./store_page/store_categoty_page');
+router.get('/store_categoty',(req, res, next) => {
+    var StoreNo = Storedata.storeNO;
+    var StoreName = Storedata.storeName
+
+    console.log('data : ' + StoreNo );
+    console.log('data : ' + StoreName );
+    Model_Category
+    .find({food_storeNO:StoreNo})
+    .exec(function(err, categoryData){
+        if (err) {
+            return next(err)
+        }
+        console.log("---------- Start Category ---------- ");
+        console.log("Category : " + categoryData);
+        console.log("---------- End Category ---------- ");
+        res.render('./store_page/store_categoty_page',{
+            categoryData,
+            StoreNo,
+            StoreName
+        })
+    })
 });
 
     // Check student

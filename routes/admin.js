@@ -527,6 +527,7 @@ const Model_Category = require('../model/model_category');
 
 // Category test
 router.get('/get_category',(req, res) => {
+
     Model_Category.find({})
     .then(data => {
         console.log(data);
@@ -562,16 +563,33 @@ router.post('/post_category',(req, res) => {
 // Category test
 
 router.get('/test_page',(req, res) => {
-    User.find({role:'store'},(err,users)=>{
+
+    var storeNo = 1;
+
+    Model_Category
+    .find({food_storeNO:storeNo})
+    .exec(function(err, categoryData){
         if (err) {
-            res.send('ERROR something.');
-            next();
-        } else {
-            // res.json(users);
-            var datausers = users;
-            res.render('./admin_page/admin_test_page',{datausers});
+            return next(err)
         }
-    }).sort({ username: 'asc' });
+        console.log("---------- Start Category ---------- ");
+        console.log("Category : " + categoryData);
+        console.log("---------- End Category ---------- ");
+        res.render('./admin_page/admin_test_page',{
+            categoryData,
+        })
+    })
+
+    // User.find({role:'store'},(err,users)=>{
+    //     if (err) {
+    //         res.send('ERROR something.');
+    //         next();
+    //     } else {
+    //         // res.json(users);
+    //         var datausers = users;
+    //         res.render('./admin_page/admin_test_page',{datausers});
+    //     }
+    // }).sort({ username: 'asc' });
 
         // res.render('./admin_page/admin_test_page')
     // })

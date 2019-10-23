@@ -1,3 +1,243 @@
+<h3 class="text-center"> --------- category show food test ---------</h3>
+<div class="row">
+    <div class="col" >
+        <h3 class="text-center card card-body ml-5">Store NO : 1</h3>
+    </div>
+    <div class="col">
+        <h3 class="text-center card card-body mr-5">Store Name : Khaw man kai</h3>
+    </div>
+</div>
+<div class="card card-body ml-3 mr-3">
+    <!-- food no i -->
+    <div class="row ">
+        <table class="table table-bordered" >
+            <thead>
+                <tr>
+                    <td width='30%'>Name</td>
+                    <td width='10%'>Type</td>
+                    <td width='10%'>Extra</td>
+                    <td width='20%'>Price</td>
+                    <td width='10%'>Calorise</td>
+                    <td width='10%'>Shotcut</td>
+                    <td width='10%'>Edit</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var i = 0; i < categoryData.length; i++) { %>
+                    <tr>
+                        <td rowspan="2"><p><%= categoryData[i].food_name %></p></td>
+                        <td rowspan="2"><%= categoryData[i].food_type %></td>
+                        <td>Normal</td>
+                        <td><%= categoryData[i].food_normal.price %></td>
+                        <td rowspan="2"><%= categoryData[i].food_calories %></td>
+                        <td><%= categoryData[i].food_normal.shotcut %></td>
+                        <td rowspan="2" class="align-middle">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+                                Edit
+                            </button>
+                            <div class="dropdown-menu">
+                                <button type="button" class="dropdown-item" href="#" data-toggle="modal" data-target="#EditFood">Edit</button>
+                                <button type="button" class="dropdown-item" href="#" data-toggle="modal" data-target="#RemoveFood">Remove</button>
+                            </div>   
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Extra</td>
+                        <td><%= categoryData[i].food_extra.price %></td>
+                        <td><%= categoryData[i].food_extra.shotcut %></td>
+                    </tr>
+                <%}%>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container text-center">
+        <button type="button" href="#" class="btn btn-primary" data-toggle="modal" data-target="#openModalAddFood"><i style="padding: 0 20px 0 20px;" class="fa fa-plus"></i></button>
+    </div>
+</div>
+
+<!-- Modal add food -->
+<div class="modal fade" id="openModalAddFood" tabindex="-1" role="dialog" aria-labelledby="HeaderModalAddFood" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="HeaderModalAddFood">Add Food</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+            <!-- form add food -->
+                <div class="form-group row">
+                    <span class="col-sm-2 align-self-center">Store NO : </span>
+                    <input type="number" id="food_storeNO" name="food_storeNO" class="form-control col-sm-2" placeholder="Enter food food storeNO" value="<%= typeof food_storeNO != 'undefined' ? food_storeNO : '' %>" readonly/>
+                    <span class="col-sm-2 align-self-center">Store Name : </span>
+                    <input type="text" id="food_storeName" name="food_storeNO" class="form-control col-sm-3" placeholder="Enter food food storeNO" value="<%= typeof food_storeNO != 'undefined' ? food_storeNO : '' %>" readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="food_name">Food Name</label>
+                    <input type="text" id="food_name" name="food_name" class="form-control" placeholder="Enter food name" value="<%= typeof food_name != 'undefined' ? food_name : '' %>"/>
+                </div>
+                <div class="form-group row">
+                    <form id="formSelectExtra" class="col-lg-2 align-self-center">
+                        <div class="custom-control custom-radio mb-4">
+                            <input type="radio" id="customRadio1" name="extra" class="custom-control-input" value="true">
+                            <label class="custom-control-label" for="customRadio1">Have extra</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="extra" class="custom-control-input" value="false" checked="">
+                            <label class="custom-control-label" for="customRadio2">No extra</label>
+                        </div>
+                    </form>
+                    <div class="col-lg-5">
+                        <div class="row mb-2" id="normal_price_div" >
+                            <span class="col-lg-5 align-self-center">Price</span>
+                            <input type="text" id="normal_price" name="normal_price"  class="col-lg-6 form-control" placeholder="Enter food price" value="<%= typeof price != 'undefined' ? price : '' %>"/>
+                        </div>
+                        <div class="row" id="extra_price_div" >   
+                            <span class="col-lg-5 align-self-center ">Extra Price</span>
+                            <input type="text" id="extra_price" name="extra_price"  class="col-lg-6 form-control" placeholder="Enter food price extra" value="<%= typeof price_extra != 'undefined' ? price_extra : '' %>" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row mb-2" id="normal_shotcut_div" >
+                            <span class="col-lg-4 align-self-center">shotcut</span>
+                            <input type="text" id="normal_shotcut" name="normal_price"  class="col-lg-6 form-control" placeholder="Enter food price" value="<%= typeof price != 'undefined' ? price : '' %>"/>
+                        </div>
+                        <div class="row" id="extra_shotcut_div" >   
+                            <span class="col-lg-4 align-self-center">shotcut</span>
+                            <input type="text" id="extra_shotcut" name="extra_price"  class="col-lg-6 form-control" placeholder="Enter food price extra" value="<%= typeof price_extra != 'undefined' ? price_extra : '' %>" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="food_calories">Food calories</label>
+                    <input type="number" id="food_calories" name="food_calories" class="form-control" placeholder="Enter food calories" value="<%= typeof food_calories != 'undefined' ? food_calories : '' %>"/>
+                </div>
+                <div class="form-group">
+                    <label for="food_type">Food type</label>
+                    <input type="text" id="food_type" name="food_type" class="form-control" placeholder="Enter food type" value="<%= typeof food_type != 'undefined' ? food_type : '' %>"/>
+                </div>
+            <!-- form add food -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal add food -->
+<!-- Modal Edit food -->
+<div class="modal fade" id="EditFood" tabindex="-1" role="dialog" aria-labelledby="EditFoodLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="EditFoodLabel">Edit Food</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <!-- form add food -->
+            <div class="form-group row">
+                <span class="col-sm-2 align-self-center">Store NO : </span>
+                <input type="number" id="food_storeNO" name="food_storeNO" class="form-control col-sm-2" placeholder="Enter food food storeNO" value="<%= typeof food_storeNO != 'undefined' ? food_storeNO : '' %>"/>
+                <span class="col-sm-2 align-self-center">Store Name : </span>
+                <input type="text" id="food_storeName" name="food_storeNO" class="form-control col-sm-3" placeholder="Enter food food storeNO" value="<%= typeof food_storeNO != 'undefined' ? food_storeNO : '' %>"/>
+            </div>
+            <div class="form-group">
+                <label for="food_name">Food Name</label>
+                <input type="text" id="food_name" name="food_name" class="form-control" placeholder="Enter food name" value="<%= typeof food_name != 'undefined' ? food_name : '' %>"/>
+            </div>
+            <div class="form-group row">
+                <form id="formSelectExtra" class="col-lg-2 align-self-center">
+                    <div class="custom-control custom-radio mb-4">
+                        <input type="radio" id="customRadio1" name="extra" class="custom-control-input" value="true">
+                        <label class="custom-control-label" for="customRadio1">Have extra</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="extra" class="custom-control-input" value="false" checked="">
+                        <label class="custom-control-label" for="customRadio2">No extra</label>
+                    </div>
+                </form>
+                <div class="col-lg-5">
+                    <div class="row mb-2" id="normal_price_div" >
+                        <span class="col-lg-5 align-self-center">Price</span>
+                        <input type="text" id="normal_price" name="normal_price"  class="col-lg-6 form-control" placeholder="Enter food price" value="<%= typeof price != 'undefined' ? price : '' %>"/>
+                    </div>
+                    <div class="row" id="extra_price_div" >   
+                        <span class="col-lg-5 align-self-center ">Extra Price</span>
+                        <input type="text" id="extra_price" name="extra_price"  class="col-lg-6 form-control" placeholder="Enter food price extra" value="<%= typeof price_extra != 'undefined' ? price_extra : '' %>" />
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row mb-2" id="normal_shotcut_div" >
+                        <span class="col-lg-4 align-self-center">shotcut</span>
+                        <input type="text" id="normal_shotcut" name="normal_price"  class="col-lg-6 form-control" placeholder="Enter food price" value="<%= typeof price != 'undefined' ? price : '' %>"/>
+                    </div>
+                    <div class="row" id="extra_shotcut_div" >   
+                        <span class="col-lg-4 align-self-center">shotcut</span>
+                        <input type="text" id="extra_shotcut" name="extra_price"  class="col-lg-6 form-control" placeholder="Enter food price extra" value="<%= typeof price_extra != 'undefined' ? price_extra : '' %>" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="food_calories">Food calories</label>
+                <input type="number" id="food_calories" name="food_calories" class="form-control" placeholder="Enter food calories" value="<%= typeof food_calories != 'undefined' ? food_calories : '' %>"/>
+            </div>
+            <div class="form-group">
+                <label for="food_type">Food type</label>
+                <input type="text" id="food_type" name="food_type" class="form-control" placeholder="Enter food type" value="<%= typeof food_type != 'undefined' ? food_type : '' %>"/>
+            </div>
+            <!-- form add food -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit food -->
+<!-- Modal Remove food -->
+<div class="modal fade" id="RemoveFood" tabindex="-1" role="dialog" aria-labelledby="EditFoodLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="EditFoodLabel">Remove Food</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Remove Food body
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Remove food -->
+
+<h3 class="text-center"> --------- category show food test ---------</h3>
+
+
+<div class="btn-group dropleft mt-5 float-right" style="width: 200px;">
+    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+      Dropleft
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Separated link</a>
+    </div>
+  </div>
 
 <!-- --------- categoty test --------- -->
 <h3 class="text-center"> --------- category show food test ---------</h3>
@@ -270,15 +510,7 @@
                 <td>Remove</td>
             </tr>
         </thead>
-        <% datausers.forEach(function(datausers,index) {%>
-        <tr>
-          <td><%= datausers.role %></td>
-          <td><%= datausers.username %></td>
-          <td><%= datausers.name %></td>
-          <td><input type="button" class="btn btn-info trigger" value="change" data-toggle="modal" data-target="#changepass" onclick="setValue('<%= datausers.name %>')"></td>
-          <td><input type="button" class="btn btn-secondary" value="remove" data-toggle="modal" data-target="#removeStore" onclick="setValueremove('<%= datausers.name %>')"></td>
-        </tr>
-        <% } ); %>
+
     </table>
 
 <!-- --------- sort test --------- -->
