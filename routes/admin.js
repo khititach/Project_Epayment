@@ -36,11 +36,53 @@ router.post('/register_user_auto_check',(req , res ) => {
             // console.log('Data : ' + username + ' , ' + name);
             msgSuccessBack = nameField + " is available.";
             res.send(msgSuccessBack);
+            res 
         }
 
     });
 
 });
+
+    // Register Admin
+// router.post('/register_admin',(req  ,res ) =>{
+//     const { 
+//         role, 
+//         username,
+//         password,
+//         name  
+//     } = req.body;
+//     let errors = [];
+
+//     if (!role || !username || !password || !name) {
+//         errors.push({ msg : 'Please fill all fields.'});
+//         res.render('./admin_page/admin_register_page',{   
+//             errors,
+//             role, 
+//             username,
+//             password,
+//             name});    
+//     } else { 
+//         User.findOne({$or:[{username:username},{name:name}]},(req,res,err) => {
+//             if (err) {
+//                 throw err;
+//             }
+//             const newUser = new User({
+//                 role, 
+//                 username,
+//                 password:User.generateHash(password),
+//                 name  
+//             });
+//             newUser.save()
+//             .then(user => {
+//                 // req.flash('success_msg','Register complete.');
+//                 res.redirect('/');
+//             })
+//             .catch(err => console.log("Error part 6 > can't save user data > " + err));
+            
+//         });
+//     }
+
+// });
 
     // Register Student 
 router.post('/register_student', (req , res) => {
