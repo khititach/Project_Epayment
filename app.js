@@ -78,7 +78,7 @@ app.use('/student', require('./routes/student'));
 app.use('/store', require('./routes/store'));
 
 
-const PORT = process.env.PORT || 5000;
+var PORT = process.env.PORT || 5000;
 app.listen(PORT, (err) => {
         console.log('Server => Started Port '+PORT);
         if (err) {
