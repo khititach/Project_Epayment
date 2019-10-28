@@ -2,7 +2,7 @@
   "name": "test_epayment_v6",
   "version": "1.0.0",
   "engines": {
-    "node": "10.x"
+    "node": "13.0.1"
   },
   "description": "",
   "main": "app.js",
