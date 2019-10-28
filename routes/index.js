@@ -88,7 +88,10 @@ router.get('/',(req,res,next) => {
 });
 
 
-
+//     // login test
+// router.get('/login_test',(req,res ) => {
+//     res.render('login_test');
+// })
 
 
 

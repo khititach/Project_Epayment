@@ -1,28 +1,11 @@
 <!-- income page -->
-
+<span style="color: red">* incomplete *</span><h1>Month</h1> 
+    <!-- ver.1 -->
+<input class="date mb-3" type="date" id="DatePiker" name="start">
 <h2>Account</h2>
-<!-- <table class="table table-striped table-bordered">
-    <thead>
-      <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Time</th>
-        <th scope="col">Activity</th>
-        <th scope="col">Deposit</th>
-        <th scope="col">Withdraw</th>
-        <th scope="col">Total</th>
-        <th scope="col">Responsible</th>
-      </tr>
-    </thead>
-    <tbody>
+<div class="container">
     
-    </tbody>
-  </table>   -->
 
-
-  <!-- ------------------- -->
-
-  <div class="container">
-      
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
@@ -83,3 +66,25 @@
   
   
 </div>
+
+<script>
+
+    $(document).ready(function(){
+        $('#DatePiker').on('change',function(){
+            var dateSelect = $('#DatePiker').val();
+            console.log("Date : " + dateSelect);
+            $.ajax({
+                url:'/student/history_date',
+                type:'POST',
+                dataType:'json',
+                data:{ datePiker : dateSelect },
+                success:function(msgSuccessBack){
+                    console.log('Send date complete.');
+                },error:function(msgErrorBack){
+                    console.log('Send date fail.');
+                }
+            })
+        });   
+    });
+
+</script>

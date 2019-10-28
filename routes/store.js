@@ -19,8 +19,8 @@ router.get('/store_categoty',(req, res, next) => {
     var StoreNo = Storedata.storeNO;
     var StoreName = Storedata.storeName
 
-    console.log('data : ' + StoreNo );
-    console.log('data : ' + StoreName );
+    console.log('Store No : ' + StoreNo );
+    console.log('Store Name : ' + StoreName );
     Model_Category
     .find({food_storeNO:StoreNo})
     .exec(function(err, categoryData){
@@ -37,6 +37,53 @@ router.get('/store_categoty',(req, res, next) => {
         })
     })
 });
+
+// ************************ incomplete **************************
+    // Category Add food 
+router.post('/post_category',(req, res, next) => {
+   
+    var Receive_Data_New_Food = req.body.DataNewFood;
+
+    console.log("New food : " + JSON.stringify(Receive_Data_New_Food));
+
+    console.log("Store store NO > New food : " + Receive_Data_New_Food.food_storeNO );
+    console.log("Store store Name > New food : " + Receive_Data_New_Food.food_storeName );
+    console.log("Store name > New food : " + Receive_Data_New_Food.food_name );
+    console.log("Store type > New food : " + Receive_Data_New_Food.food_type );
+    console.log("Store normal price > New food : " + Receive_Data_New_Food.food_normal.price );
+    console.log("Store normal shotcut > New food : " + Receive_Data_New_Food.food_normal.shotcut );
+    console.log("Store extra price > New food : " + Receive_Data_New_Food.food_extra.price );
+    console.log("Store extra shotcut > New food : " + Receive_Data_New_Food.food_extra.shotcut );
+    console.log("Store calories > New food : " + Receive_Data_New_Food.food_calories );
+
+    const Data_New_Food = new Model_Category({
+        food_storeNO:Receive_Data_New_Food.storeNO,
+        food_storeName:Receive_Data_New_Food.storeName,
+        food_name:Receive_Data_New_Food.food_name,
+        food_type:Receive_Data_New_Food.food_type,
+        food_normal:{ 
+            price:Receive_Data_New_Food.food_normal.price,
+            shotcut:Receive_Data_New_Food.food_normal.shotcut
+        },
+        food_extra:{ 
+            price: Receive_Data_New_Food.food_extra.price,
+            shotcut: Receive_Data_New_Food.food_extra.shotcut
+        }, 
+        food_calories:Receive_Data_New_Food.food_calories,
+    });
+    console.log("Model new food : ", Data_New_Food)
+    
+    // Data_New_Food.save((err) => {
+    //     if (err) {
+    //         throw err;
+    //     }
+    //     msgback = ['Add new food success.'];
+    //     res.send(msgback)
+    // })
+    
+});
+
+// ************************ incomplete **************************
 
     // Check student
 router.post('/check_student_profile',(req,res) => {

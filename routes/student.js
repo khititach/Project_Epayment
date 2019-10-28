@@ -69,7 +69,26 @@ router.post('/changepassword',(req, res, next) => {
 
 // });
 
-    // History Paging  
+    // History Paging 
+    
+// **************** incomplete *******************
+// router.post('/history_date',(req ,res) => {
+//     var SelectDate = req.body.datePiker;
+//     console.log("Select Date : "+ SelectDate);
+
+//     var dateindb = {
+//         "date": {}
+//     }
+
+//     Modelhistory.modelStudent.find({},(err,DataAfterDate) => {
+//         if (err) {
+//             throw err;
+//         }
+//         console.log('Data after select date : ' + DataAfterDate);
+//     })
+// });
+// **************** incomplete *******************
+
     // income page
 router.get('/history/income/:page',(req ,res ,next) => {
     console.log(Studentdata.stuID);
