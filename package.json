@@ -2,7 +2,7 @@
   "name": "test_epayment_v6",
   "version": "1.0.0",
   "engines": {
-    "node": "13.0.1"
+    "node": "13.x"
   },
   "description": "",
   "main": "app.js",
@@ -26,7 +26,6 @@
     "mathjs": "^6.2.2",
     "mongodb": "^3.3.0-beta2",
     "mongoose": "^5.5.15",
-    "node-hid": "^0.7.9",
     "node-rfid": "^1.0.7",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
