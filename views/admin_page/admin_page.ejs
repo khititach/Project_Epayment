@@ -158,6 +158,16 @@
             $('#student_Money').val(JSON.parse(JSON.stringify(data.money)));
             idinputTopup.select();
             $("#inputTopup").attr('readonly',false);
+          },error:function(msgError){
+            console.log('Post data failure.');
+            console.log('Msg error : ' + JSON.stringify(msgError));
+            $('#topupstatus').html('<span style="color:black;background-color: red;border-radius: 5px;">'+msgError.responseText+'</span>')
+            setTimeout(function() {
+              $('#topupstatus').html('[Top-up status]');
+            },delay)
+            $("#resetButton").click();
+            $("#checkInputIDC").select();
+            $("#checkIDCButton").attr("disabled",false);
           }
         })
       }

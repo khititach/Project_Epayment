@@ -433,14 +433,23 @@ router.post('/checkStudentProfile',(req, res) => {
     console.log("---------- New ORDER ----------");
     console.log("Receive ID card or student ID : " + getIDCorStuID);
     
-    Model_student.findOne({$or:[{stuID:getIDCorStuID},{idcard:getIDCorStuID}]})
-    .then(userDataFound => {
-        console.log("Found user data part check : " + userDataFound);
-        res.send(userDataFound);
-        global.UserData = userDataFound;
-       
-    })
-    .catch(err => console.log('ERROR > Not found user. > ' + err))
+    Model_student.findOne({$or:[{stuID:getIDCorStuID},{idcard:getIDCorStuID}]},(err, FoundStudentData) => {
+        if (err) {
+            console.log('Error find student.');
+            throw err;
+        }
+        if (!FoundStudentData) {
+            console.log('User Not Found.');
+            msgback = 'User Not Found.';
+            res.send(msgback);
+        } else {
+            console.log("Found student data part check : " + FoundStudentData);
+            res.send(FoundStudentData);
+            global.UserData = FoundStudentData;
+        }
+
+    });
+    
 
 });
 

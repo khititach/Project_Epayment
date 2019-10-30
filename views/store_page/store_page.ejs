@@ -18,7 +18,7 @@
           </div>     
           
     <div class="col-lg-8 mb-5">
-      <div class="card card-body ml-3">
+      <div class="card card-body ml-3" id="FixScrollBar">
         <div class="row" style="margin-right:1%">
           <h1 class="text-center col-lg-8" style="color: black">Money Box</h1>
           <span class="text-center col-lg-4 card card-body" id="buystatus" style="font-size: 20px;color:blue;padding: 2% 1% 2% 1%">[Buy status]</span>
@@ -86,7 +86,10 @@
 
 <script>
 
-  window.scrollTo(0,160);
+  var testScrollFix = $('#FixScrollBar');
+
+  // window.scrollTo(0,160);
+  window.scrollTo(0,testScrollFix);
   
   $(document).ready(function(){
 
@@ -166,6 +169,13 @@
       },error:function(msgError){
         console.log('Post data failure.');
         console.log('Msg error : ' + JSON.stringify(msgError));
+        $('#buystatus').html('<span style="color:black;background-color: red;border-radius: 5px;">'+msgError.responseText+'</span>')
+        setTimeout(function() {
+          $('#buystatus').html('[Buy status]');
+        },delay)
+        $("#resetButton").click();
+        $("#checkInputIDC").select();
+        $("#checkIDCButton").attr("disabled",false);  
       }
     })
   };
