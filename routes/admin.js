@@ -84,169 +84,116 @@ router.post('/register_user_auto_check',(req , res ) => {
 
 // });
 
-    // Register Student 
-router.post('/register_student', (req , res) => {
-    const { 
-        role, 
+
+    // Register Student V2 - part User
+router.post('/register_user',(req, res, next) => {
+    const {
+        role,
         username,
         password,
-        name  
+        name
+    } = req.body;
+
+    let errors = [];
+
+    console.log('Request user data : ' + JSON.stringify(req.body));
+
+    User.findOne({$or:[{username:req.body.username},{name:req.body.name}]},(err , data) => {
+        if (err) {
+            res.render('./admin_page/admin_register_page',{
+                errrs,
+                role,
+                username,
+                name
+            })
+        } else {
+            console.log('User is already for register.');
+            const newUser = new User({
+                role,
+                username,
+                password:User.generateHash(req.body.password),
+                name
+            })
+
+            if (newUser.role == "student") {
+                var uname = newUser.name;
+                console.log("New user detail : " + newUser);
+                global.newUserData = newUser;
+                res.render('./admin_page/register_student',{uname});
+            }
+            if (newUser.role == "store") {
+                var uname = newUser.name;
+                console.log("New user detail : " + newUser);
+                global.newUserData = newUser;
+                res.render('./admin_page/register_store',{uname});
+            }
+            
+        }
+    });
+
+});
+    // Register Student V2 - part student detail
+router.post('/register_student_page2',(req, res,next) => {
+    const {
+        uname, 
+        idcard,
+        sex,
+        stuID,
+        tel,
+        email,
+        money     
     } = req.body;
     let errors = [];
 
-    var uname = req.body.name;
+    Model_student.findOne({$or:[{idcard:req.body.idcard},{stuID:req.body.stuID}]},(err , data_student) => {
+        if (err) {
+            res.render('./admin_page/register_student',{   
+                errors,
+                uname, 
+                idcard,
+                sex,
+                stuID,
+                tel,
+                email,
+                money
+            });
+        } else {
+            const newStudent = new Model_student({
+                uname,
+                idcard,
+                sex,
+                stuID,
+                tel,
+                email,
+                money
+            });
 
-    // console.log("uname : " + req.body.uname);
-    // res.send(req.body);
+            var newUser = newUserData;
 
-    // Check required fields
-    if (!role || !username || !password || !name) {
-        errors.push({ msg : 'Please fill all fields.'});
-        res.render('./admin_page/admin_register_page',{   
-            errors,
-            role, 
-            username,
-            password,
-            name});    
-    } else {
-        User.findOne({username:username})
-        .then(user => {
-            if (user) {
-                console.log("username is already registered.")
-                errors.push({ msg :'username is already registered.'});
-                res.render('./admin_page/admin_register_page',{   
-                    errors,
-                    role, 
-                    username,
-                    password,
-                    name});
-            } else {
-                User.findOne({name:name})
-                .then(user=>{
-                    if (user) {
-                        console.log("name is already registered.")
-                        errors.push({ msg :'name is already registered.'});
-                        res.render('./admin_page/admin_register_page',{   
-                            errors,
-                            role, 
-                            username,
-                            password,
-                            name});  
-                    } else {
-                        console.log("req.body" + req.body);
-                            const newUser = new User({
-                                role, 
-                                username,
-                                password:User.generateHash(password),
-                                name  
-                            });
+            console.log('User detail : ' + newUser);
+            console.log('Student detail : ' + newStudent);
 
-                            console.log("User Part 1 : " + newUser);
-                            res.render('./admin_page/register_student',{uname});
+            newUser.save((err) => {
+                if (err) {
+                    console.log('Save user detail fail.')
+                    throw err;
+                } else {
+                    newStudent.save((err) => {
+                        if (err) {
+                            console.log('Save student detail fail.')
+                            throw err;
+                        } else {
+                            req.flash('success_msg','Register complete.');
+                            res.redirect('/');
+                        }
+                    })
+                }
+            })  
+        }
+    });
 
-                            router.post('/register_student_page2', (req , res ) => {
-                                const { 
-                                    uname, 
-                                    idcard,
-                                    sex,
-                                    stuID,
-                                    tel,
-                                    email,
-                                    money      
-                                } = req.body;
-                                let errors = [];
-
-                                if (!idcard || !sex || !stuID || !tel || !email) {
-                                    errors.push({ msg : 'Please fill all fields.'});
-                                    res.render('./admin_page/register_student',{   
-                                        errors,
-                                        uname, 
-                                        idcard,
-                                        sex,
-                                        stuID,
-                                        tel,
-                                        email,
-                                        money});     
-                                } else {
-                                Model_student.findOne({idcard:idcard})
-
-                                .then(user => {
-                                    if (user) {
-                                        console.log("IDcard is already registered.")
-                                        errors.push({ msg :'IDcard is already registered.'});
-                                        res.render('./admin_page/register_student',{   
-                                            errors,
-                                            uname, 
-                                            idcard,
-                                            sex,
-                                            stuID,
-                                            tel,
-                                            email,
-                                            money});
-                                    } else {
-                                        Model_student.findOne({stuID:stuID})
-                                        .then(user => {
-                                            if (user) {
-                                                console.log("stuID is already registered.")
-                                                errors.push({ msg :'Student ID is already registered.'});
-                                                res.render('./admin_page/register_student',{   
-                                                    errors,
-                                                    uname, 
-                                                    idcard,
-                                                    sex,
-                                                    stuID,
-                                                    tel,
-                                                    email,
-                                                    money});
-                                            } else {
-                                                const newStudentDetail = new Model_student({
-                                                    uname,
-                                                    idcard,
-                                                    sex,
-                                                    stuID,
-                                                    tel,
-                                                    email,
-                                                    money
-                                                });
-
-                                                console.log("User Part 1 : " + newUser);
-                                                console.log("User Part 2 : " + newStudentDetail);
-                                                 
-                                                // res.send("User Part 1 : " + newUser + "User Part 2 : " + newStudentDetail);
-                                                
-                                                newUser.save()
-                                                .then(user => {
-                                                    newStudentDetail.save()
-                                                    .then(user => {
-                                                        req.flash('success_msg','Register complete.');
-                                                        res.redirect('/');
-                                                    })
-                                                    .catch(err => console.log("Error part 6 > can't save data > " + err));
-                                                })
-                                                .catch(err => console.log("Error part 5 > can't save data > " + err));                                  
-
-                                                
-                                            }
-                                        })
-                                        .catch(err => console.log("Error part 4 > Already have a stuID "))
-                                        
-                                    }
-                                })
-                                .catch(err => console.log("Error part 3 > Already have a idcard > " + err));
-                            }
-                        });
-                    }
-                    
-                })
-                .catch(err => console.log("Error part 2 > Already have a name > " + err));
-            }
-            
-        })
-        .catch(err => console.log("Error part 1 > Already have a username." + err))    
-    }
 });
-
-    // Register Student auto check idcard and stuID
+    // Register Student - auto check idcard and stuID
 router.post('/register_student_auto_check',(req,res) => {
     var nameField = req.body.nameinputField_regStuPage;
     var inputField = req.body.data_inputField_regStuPage;
@@ -269,141 +216,193 @@ router.post('/register_student_auto_check',(req,res) => {
         }
     });
 
-})
-
-    // Register Store 
-router.post('/register_store', (req, res) => {
-    const { 
-        role, 
-        username,
-        password,
-        name  
-    } = req.body;
-    let errors = [];
-
-    var storeOwner = req.body.name;
-
-    // console.log("Store name : " + StoreName);
-    // res.send(req.body);
-
-    if (!role || !username || !password || !name) {
-        errors.push({ msg : 'Please fill all fields.'})        
-    } else {
-        User.findOne({username:username})
-        .then(UserName => {
-            if (UserName) {
-                console.log("username is already registered.")
-                errors.push({ msg :'username is already registered.'});
-                res.render('./admin_page/admin_register_page',{   
-                    errors,
-                    role, 
-                    username,
-                    password,
-                    name});
-            } else {
-                User.findOne({name:name})
-                .then(Name => {
-                    if (Name) {
-                        console.log("name is already registered.")
-                        errors.push({ msg :'name is already registered.'});
-                        res.render('./admin_page/admin_register_page',{   
-                            errors,
-                            role, 
-                            username,
-                            password,
-                            name});  
-                    } else {
-                        // console.log("req.body > " + req.body);
-                        const newUser = new User({
-                            role, 
-                            username,
-                            password:User.generateHash(password),
-                            name  
-                        });
-                        console.log("New User : " + newUser);
-                        // var newUserName = newUser.name;
-                        // console.log("User Part 1 : " + newUser);
-                        // res.send(newUser);
-
-                        res.render('./admin_page/register_store',{storeOwner});
-
-                        router.post('/register_store_page2',(req, res) => {
-                            const {
-                                storeOwner,
-                                storeNO,
-                                storeName,
-                                email,
-                                tel
-                            } = req.body
-                            let errors = [];
-
-                            console.log(req.body);
-                            // res.send(req.body);
-
-                            if (!storeNO || !storeName) {
-                                errors.push({ msg : 'Please fill storeNO and storeName fields.'});
-                                res.render('./admin_page/register_store',{   
-                                    errors,
-                                    storeOwner,
-                                    storeNO,
-                                    storeName,
-                                    email,
-                                    tel});
-                            } else {
-                                Model_store.findOne({storeNO:storeNO})
-                                .then(StoreNumber => {
-                                    if (StoreNumber) {
-                                        console.log("Store Number is already registered.")
-                                        errors.push({ msg :'Store Number is already registered.'});
-                                        res.render('./admin_page/register_store',{   
-                                            errors,
-                                            storeOwner,
-                                            storeNO,
-                                            storeName,
-                                            email,
-                                            tel});
-                                    } else {
-                                        const newStoreDetail = new Model_store({
-                                            storeOwner,
-                                            storeNO,
-                                            storeName,
-                                            email,
-                                            tel
-                                        });
-
-                                        console.log("User Part 1 : " + newUser);
-                                        console.log("User Part 2 : " + newStoreDetail);
-
-                                        // res.send("User Part 1 > " + newUser + "User Part 2 > " + newStoreDetail);
-
-                                        newUser.save()
-                                        .then(user => {
-                                            newStoreDetail.save()
-                                            .then(user => {
-                                                req.flash('success_msg','Register complete.');
-                                                res.redirect('/');
-
-                                    
-                                            })
-                                            .catch(err => console.log("ERROR Part 4 > can't save store detail > " + err))
-                                        })
-                                        .catch(err => console.log("ERROR Part 3 > can't save user data > " + err))
-                                    }
-                                })
-                                .catch(err => console.log("ERROR Part 2 > Already have a name. >" + err))
-                            }
-                        });
-                    }
-                })
-                .catch(err => console.log("ERROR Part 2 > Already have a name. >" + err))
-            }
-        })
-        .catch(err => console.log("ERROR Part 1 > Already have a username. >" + err));
-    }
-    
 });
 
-// ------------------------------------
+    // Register Store v2 - part store detail
+router.post('/register_store_page2',(req ,res ) => {
+    const {
+        storeOwner,
+        storeNO,
+        storeName,
+        email,
+        tel
+    } = req.body;
+    let errors = [];
+    
+    console.log("store detail : " + JSON.stringify(req.body));
+
+    Model_store.findOne({storeNO:req.body.storeNO},(err,data) => {
+        if (err) {
+            console.log('Save store detail fail.');
+            throw err;
+        } else {
+            const newStoreDetail = new Model_store({
+                storeOwner,
+                storeNO,
+                storeName,
+                email,
+                tel
+            });
+
+            var newUser = newUserData;
+
+            console.log("User detail : "+ newUser)
+            console.log("Store detail : "+ newStoreDetail)
+
+            newUser.save((err) => {
+                if (err) {
+                    console.log('Save user detail fail.')
+                    throw err;
+                } else {
+                    newStoreDetail.save((err) => {
+                        if (err) {
+                            console.log('Save store detail fail.')
+                            throw err;
+                        } else {
+                            req.flash('success_msg','Register complete.');
+                            res.redirect('/');
+                        }
+                    })
+                }
+            })  
+
+        }
+
+    })
+});
+
+    // Register Store 
+// router.post('/register_store', (req, res) => {
+//     const { 
+//         role, 
+//         username,
+//         password,
+//         name  
+//     } = req.body;
+//     let errors = [];
+
+//     var storeOwner = req.body.name;
+
+//     // console.log("Store name : " + StoreName);
+//     // res.send(req.body);
+
+//     if (!role || !username || !password || !name) {
+//         errors.push({ msg : 'Please fill all fields.'})        
+//     } else {
+//         User.findOne({username:username})
+//         .then(UserName => {
+//             if (UserName) {
+//                 console.log("username is already registered.")
+//                 errors.push({ msg :'username is already registered.'});
+//                 res.render('./admin_page/admin_register_page',{   
+//                     errors,
+//                     role, 
+//                     username,
+//                     password,
+//                     name});
+//             } else {
+//                 User.findOne({name:name})
+//                 .then(Name => {
+//                     if (Name) {
+//                         console.log("name is already registered.")
+//                         errors.push({ msg :'name is already registered.'});
+//                         res.render('./admin_page/admin_register_page',{   
+//                             errors,
+//                             role, 
+//                             username,
+//                             password,
+//                             name});  
+//                     } else {
+//                         // console.log("req.body > " + req.body);
+//                         const newUser = new User({
+//                             role, 
+//                             username,
+//                             password:User.generateHash(password),
+//                             name  
+//                         });
+//                         console.log("New User : " + newUser);
+//                         // var newUserName = newUser.name;
+//                         // console.log("User Part 1 : " + newUser);
+//                         // res.send(newUser);
+
+//                         res.render('./admin_page/register_store',{storeOwner});
+
+//                         router.post('/register_store_page2',(req, res) => {
+//                             const {
+//                                 storeOwner,
+//                                 storeNO,
+//                                 storeName,
+//                                 email,
+//                                 tel
+//                             } = req.body
+//                             let errors = [];
+
+//                             console.log(req.body);
+//                             // res.send(req.body);
+
+//                             if (!storeNO || !storeName) {
+//                                 errors.push({ msg : 'Please fill storeNO and storeName fields.'});
+//                                 res.render('./admin_page/register_store',{   
+//                                     errors,
+//                                     storeOwner,
+//                                     storeNO,
+//                                     storeName,
+//                                     email,
+//                                     tel});
+//                             } else {
+//                                 Model_store.findOne({storeNO:storeNO})
+//                                 .then(StoreNumber => {
+//                                     if (StoreNumber) {
+//                                         console.log("Store Number is already registered.")
+//                                         errors.push({ msg :'Store Number is already registered.'});
+//                                         res.render('./admin_page/register_store',{   
+//                                             errors,
+//                                             storeOwner,
+//                                             storeNO,
+//                                             storeName,
+//                                             email,
+//                                             tel});
+//                                     } else {
+//                                         const newStoreDetail = new Model_store({
+//                                             storeOwner,
+//                                             storeNO,
+//                                             storeName,
+//                                             email,
+//                                             tel
+//                                         });
+
+//                                         console.log("User Part 1 : " + newUser);
+//                                         console.log("User Part 2 : " + newStoreDetail);
+
+//                                         // res.send("User Part 1 > " + newUser + "User Part 2 > " + newStoreDetail);
+
+//                                         newUser.save()
+//                                         .then(user => {
+//                                             newStoreDetail.save()
+//                                             .then(user => {
+//                                                 req.flash('success_msg','Register complete.');
+//                                                 res.redirect('/');
+
+                                    
+//                                             })
+//                                             .catch(err => console.log("ERROR Part 4 > can't save store detail > " + err))
+//                                         })
+//                                         .catch(err => console.log("ERROR Part 3 > can't save user data > " + err))
+//                                     }
+//                                 })
+//                                 .catch(err => console.log("ERROR Part 2 > Already have a name. >" + err))
+//                             }
+//                         });
+//                     }
+//                 })
+//                 .catch(err => console.log("ERROR Part 2 > Already have a name. >" + err))
+//             }
+//         })
+//         .catch(err => console.log("ERROR Part 1 > Already have a username. >" + err));
+//     }
+    
+// });
+
   // Register Store auto check storeNO 
 router.post('/register_store_auto_check',(req,res) => {
     var nameField = req.body.nameinputField_regStuPage;

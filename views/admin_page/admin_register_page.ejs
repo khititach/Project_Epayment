@@ -124,16 +124,16 @@
        })
     }
 
-    document.getElementById('sendDataPath').action = '/admin/register_student';
+    document.getElementById('sendDataPath').action = '/admin/register_user';
     function sendPath(DataPath,element) {
         // document.getElementById(DataPath).action = element.value == 'student' ? '/admin/register_student' : null ;
         // document.getElementById(DataPath).action = element.value == 'store' ? '/admin/register_store' : null ;
         
         if (element.value == 'student') {
-            document.getElementById(DataPath).action = '/admin/register_student';
+            document.getElementById(DataPath).action = '/admin/register_user';
         }
         if (element.value == 'store') {
-            document.getElementById(DataPath).action = '/admin/register_store';
+            document.getElementById(DataPath).action = '/admin/register_user';
         } 
         if (element.value == 'admin') {
             document.getElementById(DataPath).action = '/admin/register_admin';
