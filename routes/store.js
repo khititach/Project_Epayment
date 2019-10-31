@@ -12,9 +12,50 @@ const Model_Category = require('../model/model_category');
 // ************************ It's not complete **************************
 
     // Report Page
-router.get('/store_report',(req, res) => {
-    
-    res.render('./store_page/store_report_page');
+router.get('/store_report/:page',(req, res) => {
+
+    var StoreNofromhomepage = Storedata.storeNO;
+    console.log("Store No : "+ StoreNofromhomepage);
+
+    var resPerPage = 10;
+    var page = req.params.page || 1;
+
+    Modelhistory.modelStore
+    .find({storeNO:StoreNofromhomepage})
+    .skip((resPerPage * page) - resPerPage)
+    .limit(resPerPage)
+    .exec((err, ResStoreHistory) => {
+        Modelhistory.modelStore.find({storeNO:StoreNofromhomepage}).countDocuments().exec((err, count) =>{
+            if (err) {
+                console.log('Call Store history fail.');
+                return next(err);
+            }
+            console.log("---------- Start History ---------- ");
+            console.log("History : " + ResStoreHistory);
+            console.log("page : " + page);
+            console.log("count : " + count);
+            console.log("pages : " + Math.ceil(count/resPerPage));
+            console.log("---------- End History ---------- ");
+            res.render('./store_page/store_report_page',{
+                ResStoreHistory,
+                current:page,
+                pages:Math.ceil(count/resPerPage)
+            })
+        } )
+    })
+
+    // Modelhistory.modelStore.find({storeNO:StoreNofromhomepage},(err,storeHistory) => {
+    //     if (err) {
+    //         console.log('Call store history fail.');
+    //         throw err;
+    //     } else {
+    //         console.log("---------- Start History ---------- ");
+    //         console.log("History : " + storeHistory);
+    //         console.log("---------- End History ---------- ");
+    //         res.render('./store_page/store_report_page',{storeHistory});
+    //     }
+    // })
+   
 });
 
 // ************************ It's not complete **************************

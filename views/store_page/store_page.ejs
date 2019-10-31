@@ -9,7 +9,7 @@
             </div>
             <div class="card card-body text-center mb-3">
                 <h2 style="color: black">Store Report</h2>
-                <a class="btn btn-primary" href="/store/store_report" v>Report</a>
+                <a class="btn btn-primary" href="/store/store_report/1" v>Report</a>
             </div>
             <div class="card card-body text-center mb-3">
                 <h2 style="color: black">Store Category</h2>
@@ -25,12 +25,12 @@
         </div>
           <!-- <form action=""> -->
               <div class="form-group mt-3">
-                  <h3 style="color: black">ID Card</h3>
+                  <h3 style="color: black">ID Card or Student ID</h3>
                   <table>
                     <tr>
                       <td style="width:90%">
                         <div class="form-group m-auto" > 
-                          <input class="form-control form-control-lg" type="text" placeholder="ID card" id="checkInputIDC">
+                          <input class="form-control form-control-lg" type="text" placeholder="Enter ID Card or Student ID" id="checkInputIDC">
                         </div>
                       </td>
                       <td>
@@ -124,6 +124,7 @@
         $("#inputprice").val('');
         $("#checkInputIDC").select();
         $("#inputprice").attr('readonly',true);
+        $("#checkIDCButton").attr("disabled",false); 
     });
 
     $('#checkIDCButton').click(function(){
