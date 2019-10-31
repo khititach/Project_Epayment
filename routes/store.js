@@ -13,6 +13,7 @@ const Model_Category = require('../model/model_category');
 
     // Report Page
 router.get('/store_report',(req, res) => {
+    
     res.render('./store_page/store_report_page');
 });
 
