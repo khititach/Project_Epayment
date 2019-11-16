@@ -18,7 +18,7 @@ const userSchemaStudent = new Schema({
 
 // Model student history
 const userSchemaStore = new Schema({
-    storeNO:{ type: String, require: true , unique:true },
+    storeNO:{ type: String, require: true },
     storeOwn:{ type: String, require: true },
     date:{ type: Date, default: Date.now },
     activity:{ type:String },

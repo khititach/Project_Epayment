@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const math = require('mathjs');
+const mongoose = require('mongoose');
 
     // Model
 const User = require('../model/user');
@@ -10,15 +11,34 @@ const Modelhistory = require('../model/model_history');
 const Model_Category = require('../model/model_category');
 
 // ************************ It's not complete **************************
+    
+    // Function Format Date
+function formatDate(date){
+    var Format_date = new Date(date),
+        month = '' + (Format_date.getMonth() + 1 ),
+        day = '' + Format_date.getDate(),
+        year = '' + Format_date.getFullYear();
 
-    // Report Page
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    return [year,month,day].join('-');
+}
+
+    // Report Main Page
 router.get('/store_report/:page',(req, res) => {
 
     var StoreNofromhomepage = Storedata.storeNO;
+    var storename = Storedata.storeName;
     console.log("Store No : "+ StoreNofromhomepage);
 
     var resPerPage = 10;
     var page = req.params.page || 1;
+
+    var selected_date = '';
 
     Modelhistory.modelStore
     .find({storeNO:StoreNofromhomepage})
@@ -39,24 +59,67 @@ router.get('/store_report/:page',(req, res) => {
             res.render('./store_page/store_report_page',{
                 ResStoreHistory,
                 current:page,
-                pages:Math.ceil(count/resPerPage)
+                pages:Math.ceil(count/resPerPage),
+                storename,
+                selected_date
             })
         } )
     })
-
-    // Modelhistory.modelStore.find({storeNO:StoreNofromhomepage},(err,storeHistory) => {
-    //     if (err) {
-    //         console.log('Call store history fail.');
-    //         throw err;
-    //     } else {
-    //         console.log("---------- Start History ---------- ");
-    //         console.log("History : " + storeHistory);
-    //         console.log("---------- End History ---------- ");
-    //         res.render('./store_page/store_report_page',{storeHistory});
-    //     }
-    // })
    
 });
+
+    // Store history select date
+router.get('/store_report/select_date/:page',(req ,res ) => {
+
+    var StoreNofromhomepage = Storedata.storeNO;
+    var storename = Storedata.storeName;
+    console.log("Store No : "+ StoreNofromhomepage);
+
+    var resPerPage = 10;
+    var page = req.params.page || 1;
+
+    // var Fake_date = '';
+    var selected_date = req.query.date;
+    // var post_selected_date = new Date(selected_date);
+    console.log('Selected Date : ' + formatDate(selected_date))
+    // var Fake_date = new Date('2019-10-31')
+    // console.log("Fake date : "+ Fake_date);
+    // console.log("Fake date : "+ formatDate(Fake_date));
+    var Array_selected_date = [];
+
+    Modelhistory.modelStore
+    .find({storeNO:StoreNofromhomepage},(err, selectDate) => {
+        for (let i = 0; i < selectDate.length; i++) {
+            const storehistorydata = selectDate[i];
+            const storehistorydata_date = selectDate[i].date;
+            if (formatDate(storehistorydata_date) == formatDate(selected_date)) {
+                Array_selected_date.push(storehistorydata);
+            }
+        }
+        var count = Array_selected_date.length;
+        // console.log("TCL: count", count)
+        // var databyselectedDate = Array_selected_date.slice(((resPerPage * page) - resPerPage),resPerPage);
+        var databyselectedDate = Array_selected_date.slice(((resPerPage * page) - resPerPage),(resPerPage * page));
+        // console.log("TCL: resPerPage", databyselectedDate)
+        console.log("---------- Start History ---------- ");
+        console.log("History : " + databyselectedDate);
+        console.log("page : " + page);
+        console.log("count : " + count);
+        console.log("pages : " + Math.ceil(count/resPerPage));
+        console.log("---------- End History ---------- ");
+
+        // res.send(databyselectedDate);
+
+        res.render('./store_page/store_report_select_date_page',{
+                    ResStoreHistory:databyselectedDate,
+                    current:page,
+                    pages:Math.ceil(count/resPerPage),
+                    storename,
+                    selected_date
+        })
+    })
+});
+
 
 // ************************ It's not complete **************************
 

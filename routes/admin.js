@@ -539,7 +539,7 @@ router.post('/edit_store_password',(req, res) => {
             console.log('ERROR > New Password fail > ' + err);
         }
         console.log('User New Password success.');
-        req.flash('success_msg' ,'Password '+ nameValue +'change success.');
+        req.flash('success_msg' ,'Password '+ nameValue +' change success.');
         res.redirect('/admin/edit_store');
     });
     // req.flash('success_msg' ,'Password change success.');
