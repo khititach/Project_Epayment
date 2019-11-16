@@ -1,7 +1,15 @@
 <!-- income page -->
-<h1>Month</h1> 
+<h1>select date</h1>  
     <!-- ver.1 -->
-<input class="date mb-3" type="date" id="DatePiker" name="start">
+<div class='input-group date' id='datepicker'>
+    <form action="/student/history/income/selected_date/1" method="GET" id="formAutoSubmit" autocomplete="off">
+        <input type='text' name="date" class="form-control" id="datepickerVal" />
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </form>
+</div>
+
 <h2>Account</h2>
 <div class="container">
     
@@ -19,72 +27,117 @@
             </tr>
         </thead>
         <tbody>
-        <% for (var i = 0; i < historyData.length; i++) {%>
-            <tr>
-                <td><%= historyData[i].date.getDate() + "/" + (historyData[i].date.getMonth()+1) + "/" + historyData[i].date.getFullYear() %></td>
-                <td><%= historyData[i].date.getHours() + ":" + historyData[i].date.getMinutes() + ":" + historyData[i].date.getSeconds() %></td>
-                <td><%= historyData[i].activity %></td>
-                <td><%= historyData[i].deposit %></td>
-                <td><%= historyData[i].withdraw %></td>
-                <td><%= historyData[i].total %></td>
-                <td><%= historyData[i].responsible %></td>
-            <tr>
-        <%}%>
+            <% if (historyData == '') {%>
+                <tr>
+                    <td colspan="7">
+                        <h3 class="text-center">History not found</h3>
+                        
+                    </td>
+                </tr>
+            <%} else {%>
+                <% for (var i = 0; i < historyData.length; i++) {%>
+                    <tr>
+                        <td><%= historyData[i].date.getDate() + "/" + (historyData[i].date.getMonth()+1) + "/" + historyData[i].date.getFullYear() %></td>
+                        <td><%= historyData[i].date.getHours() + ":" + historyData[i].date.getMinutes() + ":" + historyData[i].date.getSeconds() %></td>
+                        <td><%= historyData[i].activity %></td>
+                        <td><%= historyData[i].deposit %></td>
+                        <td><%= historyData[i].withdraw %></td>
+                        <td><%= historyData[i].total %></td>
+                        <td><%= historyData[i].responsible %></td>
+                    <tr>
+                <%}%>
+            <%}%>
         </tbody>
     </table>  
-
-    <% if (pages > 0) { %>     
-    <div class="d-flex justify-content-center">
-        <ul class="pagination">
-            <% if (current == 1) { %>
-                <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
-            <% } else { %>
-                <li class="page-item"><a class="page-link" href="/student/history/income/1">First</a></li>
+    <% if (selected_date == '') {%>
+        <% if (pages > 0) { %>     
+            <div class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <% if (current == 1) { %>
+                        <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/student/history/income/1">First</a></li>
+                    <% } %>
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                        <% if (i == current) { %>
+                            <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                        <% } else { %>
+                            <li class="page-item"><a class="page-link" href="/student/history/income/<%= i %>"><%= i %></a></li>
+                        <% } %>
+                        <% if (i == Number(current) + 4 && i < pages) { %>
+                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                        <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="page-item disabled"><a class="page-link">Last</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/student/history/income/<%= pages %>">&raquo;</a></li>
+                    <% } %>
+                </ul>
+            </div>
             <% } %>
-            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-            <% if (i !== 1) { %>
-                <li class="page-item disabled"><a class="page-link">...</a></li>
+    <%} else { %>
+        <% if (pages > 0) { %>     
+            <div class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <% if (current == 1) { %>
+                        <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/student/history/income/selected_date/1?date=<%= selected_date %>">First</a></li>
+                    <% } %>
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                        <% if (i == current) { %>
+                            <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                        <% } else { %>
+                            <li class="page-item"><a class="page-link" href="/student/history/income/selected_date/<%= i %>?date=<%= selected_date %>"><%= i %></a></li>
+                        <% } %>
+                        <% if (i == Number(current) + 4 && i < pages) { %>
+                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                        <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="page-item disabled"><a class="page-link">Last</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/student/history/income/selected_date/<%= pages %>?date=<%= selected_date %>">&raquo;</a></li>
+                    <% } %>
+                </ul>
+            </div>
             <% } %>
-            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
-                <% if (i == current) { %>
-                    <li class="page-item active"><a class="page-link"><%= i %></a></li>
-                <% } else { %>
-                    <li class="page-item"><a class="page-link" href="/student/history/income/<%= i %>"><%= i %></a></li>
-                <% } %>
-                <% if (i == Number(current) + 4 && i < pages) { %>
-                    <li class="page-item disabled"><a class="page-link">...</a></li>
-                <% } %>
-            <% } %>
-            <% if (current == pages) { %>
-                <li class="page-item disabled"><a class="page-link">Last</a></li>
-            <% } else { %>
-                <li class="page-item"><a class="page-link" href="/student/history/income/<%= pages %>">&raquo;</a></li>
-            <% } %>
-        </ul>
-    </div>
-    <% } %>
+    <%} %>
+    
   
   
 </div>
 
 <script>
 
-    $(document).ready(function(){
-        $('#DatePiker').on('change',function(){
-            var dateSelect = $('#DatePiker').val();
+$(document).ready(function(){
+        $('#datepicker').on('change',function(){
+            var dateSelect = $('#datepickerVal').val();
             console.log("Date : " + dateSelect);
-            $.ajax({
-                url:'/student/history_date',
-                type:'POST',
-                dataType:'json',
-                data:{ datePiker : dateSelect },
-                success:function(msgSuccessBack){
-                    console.log('Send date complete.');
-                },error:function(msgErrorBack){
-                    console.log('Send date fail.');
-                }
-            })
+            $('#formAutoSubmit').submit();
         });   
     });
 
+$(function () {
+    $('#datepicker').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayHighlight: true,
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        orientation: "button"
+    });
+});
 </script>

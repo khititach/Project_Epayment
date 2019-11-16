@@ -1,0 +1,112 @@
+<!-- income page -->
+<h1>select date</h1> 
+    <!-- ver.1 -->
+<div class='input-group date' id='datepicker'>
+    <form action="/student/history/income/selected_date/1" method="GET" id="formAutoSubmit" autocomplete="off">
+        <input type='text' name="date" class="form-control" id="datepickerVal" />
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </form>
+</div>
+
+<h2>Account</h2>
+<div class="container">
+    
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Activity</th>
+            <th scope="col">Deposit</th>
+            <th scope="col">Withdraw</th>
+            <th scope="col">Total</th>
+            <th scope="col">Responsible</th>
+            </tr>
+        </thead>
+        <tbody>         
+            <% if (historyData == '') {%>
+                <tr>
+                    <td>test</td>
+                </tr>
+            <%} else {%>
+                <% for (var i = 0; i < historyData.length; i++) {%>
+                    <tr>
+                        <td><%= historyData[i].date.getDate() + "/" + (historyData[i].date.getMonth()+1) + "/" + historyData[i].date.getFullYear() %></td>
+                        <td><%= historyData[i].date.getHours() + ":" + historyData[i].date.getMinutes() + ":" + historyData[i].date.getSeconds() %></td>
+                        <td><%= historyData[i].activity %></td>
+                        <td><%= historyData[i].deposit %></td>
+                        <td><%= historyData[i].withdraw %></td>
+                        <td><%= historyData[i].total %></td>
+                        <td><%= historyData[i].responsible %></td>
+                    <tr>
+                <%}%>
+            <%}%>
+        </tbody>
+    </table>  
+
+    <% if (pages > 0) { %>     
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            <% if (current == 1) { %>
+                <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+            <% } else { %>
+                <li class="page-item"><a class="page-link" href="/student/history/income/1">First</a></li>
+            <% } %>
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+            <% if (i !== 1) { %>
+                <li class="page-item disabled"><a class="page-link">...</a></li>
+            <% } %>
+            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                <% if (i == current) { %>
+                    <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                <% } else { %>
+                    <li class="page-item"><a class="page-link" href="/student/history/income/<%= i %>"><%= i %></a></li>
+                <% } %>
+                <% if (i == Number(current) + 4 && i < pages) { %>
+                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                <% } %>
+            <% } %>
+            <% if (current == pages) { %>
+                <li class="page-item disabled"><a class="page-link">Last</a></li>
+            <% } else { %>
+                <li class="page-item"><a class="page-link" href="/student/history/income/<%= pages %>">&raquo;</a></li>
+            <% } %>
+        </ul>
+    </div>
+    <% } %>
+  
+  
+</div>
+
+<p>test <%= historyData %></p>
+<p> <%= current %></p>
+<p> <%= pages %></p>
+<p> <%= selected_date %></p>
+
+
+<script>
+
+    $(document).ready(function(){
+        $('#DatePiker').on('change',function(){
+            var dateSelect = $('#DatePiker').val();
+            console.log("Date : " + dateSelect);
+            $('#formAutoSubmit').submit();
+        });   
+    });
+$(function () {
+    $('#datepicker').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayHighlight: true,
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        orientation: "button"
+    });
+});
+</script>

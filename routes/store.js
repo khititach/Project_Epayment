@@ -10,8 +10,6 @@ const Model_store = require('../model/model_store');
 const Modelhistory = require('../model/model_history');
 const Model_Category = require('../model/model_category');
 
-// ************************ It's not complete **************************
-    
     // Function Format Date
 function formatDate(date){
     var Format_date = new Date(date),
@@ -119,10 +117,6 @@ router.get('/store_report/select_date/:page',(req ,res ) => {
         })
     })
 });
-
-
-// ************************ It's not complete **************************
-
 
     // Category Page
 router.get('/store_categoty',(req, res, next) => {

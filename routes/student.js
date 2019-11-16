@@ -89,6 +89,23 @@ router.post('/changepassword',(req, res, next) => {
 // });
 // **************** incomplete *******************
 
+// **************** incomplete *******************
+// Function Format Date
+function formatDate(date){
+    var Format_date = new Date(date),
+        month = '' + (Format_date.getMonth() + 1 ),
+        day = '' + Format_date.getDate(),
+        year = '' + Format_date.getFullYear();
+
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    return [year,month,day].join('-');
+}
+
     // income page
 router.get('/history/income/:page',(req ,res ,next) => {
     console.log(Studentdata.stuID);
@@ -115,12 +132,67 @@ router.get('/history/income/:page',(req ,res ,next) => {
             res.render('./student_page/student_history_page',{
                 historyData:resHistory,
                 current:page,
-                pages:Math.ceil(count/resPerPage)
+                pages:Math.ceil(count/resPerPage),
+                selected_date:''
             })
         })
     })
 });
 
+    // income filter 
+router.get('/history/income/selected_date/:page',(req , res ) => {
+    
+    // init user
+    console.log(Studentdata.stuID);
+    var studentID = Studentdata.stuID;
+    // var studentID = '00001';
+
+    // init pagination
+    var resPerPage = 10;
+    var page = req.params.page || 1;
+
+    // init select date
+    var selected_date = req.query.date;
+    console.log("selected date : "+ selected_date)
+
+    Modelhistory.modelStudent.find({stuID:studentID},(err , StudentHistory ) => {
+        if (err) {
+            console.log('Find student history fail.');
+            throw err;
+        } else {
+            var Array_selected_date = [];
+            for (let i = 0; i < StudentHistory.length; i++) {
+                const studenthistorydata = StudentHistory[i];
+                const studenthistorydata_date = StudentHistory[i].date;                
+                if (formatDate(studenthistorydata_date) == formatDate(selected_date)) {
+                    Array_selected_date.push(studenthistorydata);
+                }
+            }
+            // console.log('Found Student history fliter by date: ' + Array_selected_date);
+            var count = Array_selected_date.length;
+
+            var databyselectedDate = Array_selected_date.slice(((resPerPage * page) - resPerPage),(resPerPage * page));
+
+            console.log("---------- Start History ---------- ");
+            console.log("History : " + databyselectedDate);
+            console.log("page : " + page);
+            console.log("count : " + count);
+            console.log("pages : " + Math.ceil(count/resPerPage));
+            console.log("---------- End History ---------- ");
+
+            // res.send(databyselectedDate)
+
+            res.render('./student_page/student_history_page',{
+                historyData:databyselectedDate,
+                current:page,
+                pages:Math.ceil(count/resPerPage),
+                selected_date
+            })
+        }
+    })
+})
+
+// **************** incomplete *******************
    // food page
 router.get('/history/food/:page',(req ,res ,next) => {
 
@@ -131,14 +203,6 @@ router.get('/history/graph/:page',(req ,res ,next) => {
 
 });
 
-//     // test paging 
-// router.get('/history/test/:page',(req ,res ,next) => {
-//     var resPerPage = 10 ;
-//     var page = req.params.page || 1;
-//     console.log("resPerPage : " + resPerPage);
-//     console.log("page : " + page);
-//     res.send("page : " + page);
-// });
 
 
 module.exports = router;
