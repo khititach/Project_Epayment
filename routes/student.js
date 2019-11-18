@@ -89,7 +89,6 @@ router.post('/changepassword',(req, res, next) => {
 // });
 // **************** incomplete *******************
 
-// **************** incomplete *******************
 // Function Format Date
 function formatDate(date){
     var Format_date = new Date(date),
@@ -155,7 +154,9 @@ router.get('/history/income/selected_date/:page',(req , res ) => {
     var selected_date = req.query.date;
     console.log("selected date : "+ selected_date)
 
-    Modelhistory.modelStudent.find({stuID:studentID},(err , StudentHistory ) => {
+    Modelhistory.modelStudent
+    .find({stuID:studentID}).sort({ date: 'desc' })
+    .exec((err , StudentHistory ) => {
         if (err) {
             console.log('Find student history fail.');
             throw err;
@@ -192,7 +193,6 @@ router.get('/history/income/selected_date/:page',(req , res ) => {
     })
 })
 
-// **************** incomplete *******************
    // food page
 router.get('/history/food/:page',(req ,res ,next) => {
 

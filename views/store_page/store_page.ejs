@@ -8,12 +8,12 @@
               <h2><%= StoreDataFound.storeNO %></h2>
             </div>
             <div class="card card-body text-center mb-3">
-                <h2 style="color: black">Store Report</h2>
-                <a class="btn btn-primary" href="/store/store_report/1" v>Report</a>
+              <h2 style="color: black">Store Report</h2>
+              <a class="btn btn-primary" href="/store/store_report/1" v>Report</a>
             </div>
             <div class="card card-body text-center mb-3">
-                <h2 style="color: black">Store Category</h2>
-                <a class="btn btn-primary" href="/store/store_categoty">Category</a>
+              <h2 style="color: black">Store Category</h2>
+              <a class="btn btn-primary" href="/store/store_categoty">Category</a>
             </div>
           </div>     
           
@@ -82,14 +82,55 @@
           <!-- </form> -->
       </div>
     </div>
-          
+
+<!-- Modal Alert input student id or id card -->
+<div class="modal fade" id="alertInputid" tabindex="-1" role="dialog" aria-labelledby="alertInputidLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="alertInputidLabel">Alert!</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h5 class="modal-title" id="alertInputCashLabel">Please input student ID or ID Card.</h5>
+      </div>
+      <div class="modal-footer">
+          <button type="button" id="closeModalinputid" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Modal Alert input student id or id card -->
+
+
+  <!-- Modal Alert input price -->
+<div class="modal fade" id="alertInputCash" tabindex="-1" role="dialog" aria-labelledby="alertInputCashLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="alertInputCashLabel">Alert!</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h5 class="modal-title" id="alertInputCashLabel">Please input price.</h5>
+      </div>
+      <div class="modal-footer">
+          <button type="button" id="closeModalinputcash" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Modal Alert input price -->
 
 <script>
 
-  var testScrollFix = $('#FixScrollBar');
-
-  // window.scrollTo(0,160);
-  window.scrollTo(0,testScrollFix);
+  document.getElementById('FixScrollBar').scrollIntoView({
+    behavior: 'smooth'
+  });
   
   $(document).ready(function(){
 
@@ -116,21 +157,28 @@
     });
 
     $("#resetButton").click(function() {
-        $('#student_ID').val('');
-        $('#student_name').val('');
-        $('#student_sex').val('');
-        $('#student_Money').val('');
-        $("#checkInputIDC").val('');
-        $("#inputprice").val('');
-        $("#checkInputIDC").select();
-        $("#inputprice").attr('readonly',true);
-        $("#checkIDCButton").attr("disabled",false); 
+      Reset_btn();
     });
+
+    $("#alertInputid").keyup(function(event) {
+      if (event.keyCode === 13) {
+        $("#closeModalinputid").click();
+        $("#checkInputIDC").select();
+      }
+    })
+
+    $("#alertInputCash").keyup(function(event) {
+      if (event.keyCode === 13) {
+        $("#closeModalinputcash").click();
+        $("#inputprice").select();
+      }
+    })
 
     $('#checkIDCButton').click(function(){
       var Val_checkIDC = $('#checkInputIDC').val();
       if (Val_checkIDC === '') {
-        alert('Please input id card or student id.')
+        // alert('Please input id card or student id.')
+        $("#alertInputid").modal('show');
       } else {
         // console.log('ID card or student id : ' + Val_checkIDC);
         SubmitCheck(Val_checkIDC);
@@ -140,7 +188,7 @@
     $('#submitPriceButton').click(function(){
       var Val_price = $('#inputprice').val();
       if (Val_price === '') {
-        alert('Please input price.')
+        $("#alertInputCash").modal('show');
       } else {
         // console.log('ID card or student id : ' + Val_checkIDC);
         SubmitPrice(Val_price);
@@ -151,7 +199,8 @@
 
   function SubmitCheck(IDcardOrStuID){
     console.log('ID card or student id : ' + IDcardOrStuID);
-    $("#checkIDCButton").attr("disabled",true);  
+    $("#checkIDCButton").attr("disabled",true); 
+    $("#checkInputIDC").attr('readonly',true); 
     $.ajax({
       url:'/store/check_student_profile',
       type:'POST',
@@ -174,9 +223,10 @@
         setTimeout(function() {
           $('#buystatus').html('[Buy status]');
         },delay)
-        $("#resetButton").click();
-        $("#checkInputIDC").select();
-        $("#checkIDCButton").attr("disabled",false);  
+        Reset_btn()
+        // $("#resetButton").click();
+        // $("#checkInputIDC").select();
+        // $("#checkIDCButton").attr("disabled",false);  
       }
     })
   };
@@ -206,11 +256,30 @@
         },delay)
       }
     })
-    $("#resetButton").click();
-    $("#checkInputIDC").select();
-    $("#checkIDCButton").attr("disabled",false);  
+    Reset_btn()
+    // $("#resetButton").click();
+    // $("#checkInputIDC").select();
+    // $("#checkIDCButton").attr("disabled",false);  
     
 
   };
 
+  function Reset_btn() {
+      // Input Student ID or ID Card
+      $("#checkInputIDC").val('');
+      $("#checkInputIDC").attr('readonly',false);
+      // btn Check Student ID or ID Card
+      $("#checkIDCButton").attr("disabled",false);
+      // user data
+      $('#student_ID').val('');
+      $('#student_name').val('');
+      $('#student_sex').val('');
+      $('#student_Money').val('');
+      // Input price
+      $("#inputprice").val('');
+      $("#inputprice").attr('readonly',true);
+      // init select input box > Input Student ID or ID Card
+      $("#checkInputIDC").select();
+  }
+  
 </script>

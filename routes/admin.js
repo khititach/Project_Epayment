@@ -512,6 +512,7 @@ router.post('/topup',(req ,res) => {
 
     // Edit Store page
 router.get('/edit_store',(req,res) => {
+    var admin_name = req.session.passport.user.name;
     User.find({role:'store'},(err,users)=>{
         if (err) {
             res.send('ERROR something.');
@@ -519,7 +520,10 @@ router.get('/edit_store',(req,res) => {
         } else {
             // res.json(users);
             var datausers = users;
-            res.render('./admin_page/admin_edit_store_page',{datausers});
+            res.render('./admin_page/admin_edit_store_page',{
+                datausers,
+                admin_name
+            });
         }
     }).sort({ username: 'asc' });
 });

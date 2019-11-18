@@ -39,7 +39,7 @@ router.get('/store_report/:page',(req, res) => {
     var selected_date = '';
 
     Modelhistory.modelStore
-    .find({storeNO:StoreNofromhomepage})
+    .find({storeNO:StoreNofromhomepage}).sort({ date: 'desc' })
     .skip((resPerPage * page) - resPerPage)
     .limit(resPerPage)
     .exec((err, ResStoreHistory) => {
@@ -86,7 +86,8 @@ router.get('/store_report/select_date/:page',(req ,res ) => {
     var Array_selected_date = [];
 
     Modelhistory.modelStore
-    .find({storeNO:StoreNofromhomepage},(err, selectDate) => {
+    .find({storeNO:StoreNofromhomepage}).sort({ date: 'desc' })
+    .exec((err, selectDate) => {
         for (let i = 0; i < selectDate.length; i++) {
             const storehistorydata = selectDate[i];
             const storehistorydata_date = selectDate[i].date;
@@ -107,8 +108,15 @@ router.get('/store_report/select_date/:page',(req ,res ) => {
         console.log("---------- End History ---------- ");
 
         // res.send(databyselectedDate);
+        // res.render('./store_page/store_report_select_date_page',{
+        //             ResStoreHistory:databyselectedDate,
+        //             current:page,
+        //             pages:Math.ceil(count/resPerPage),
+        //             storename,
+        //             selected_date
+        // })
 
-        res.render('./store_page/store_report_select_date_page',{
+        res.render('./store_page/store_report_page',{
                     ResStoreHistory:databyselectedDate,
                     current:page,
                     pages:Math.ceil(count/resPerPage),

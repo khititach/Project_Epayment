@@ -36,7 +36,7 @@
                       <tr>
                         <td>
                           <div class="form-group m-auto"> 
-                            <input class="form-control form-control-lg" type="text" name="idcard" id="checkInputIDC" placeholder="ID card or Student ID" id="inputLarge" >
+                            <input class="form-control form-control-lg" type="text" name="idcard" id="checkInputIDC" placeholder="ID card or Student ID">
                           </div>
                         </td>
                         <td>
@@ -87,14 +87,61 @@
               <!-- </form> -->
             </div>
       </div>
+
+<!-- Modal Alert input student id or id card -->
+<div class="modal fade" id="alertInputid" tabindex="-1" role="dialog" aria-labelledby="alertInputidLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="alertInputidLabel">Alert!</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h5 class="modal-title" id="alertInputCashLabel">Please input student ID or ID Card.</h5>
+      </div>
+      <div class="modal-footer">
+          <button type="button" id="closeModalinputid" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Alert input student id or id card -->
+
+<!-- Modal Alert input cash -->
+<div class="modal fade" id="alertInputCash" tabindex="-1" role="dialog" aria-labelledby="alertInputCashLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="alertInputCashLabel">Alert!</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h5 class="modal-title" id="alertInputCashLabel">Please input cash.</h5>
+      </div>
+      <div class="modal-footer">
+          <button type="button" id="closeModalinputcash" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Alert input cash -->
+
 <script>
 
-  window.scrollTo(0,180);
+  // window.scrollTo(0,180);
 
-  var idCheckInputIDC = document.getElementById('checkInputIDC');
-  var idcheckIDCButton = document.getElementById('checkIDCButton');
+  document.getElementById('topupstatus').scrollIntoView({
+    behavior: 'smooth'
+  });
+
+  // var idCheckInputIDC = document.getElementById('checkInputIDC');
+  // var idcheckIDCButton = document.getElementById('checkIDCButton');
   var idinputTopup = document.getElementById('inputTopup');
-  var idtopupButton = document.getElementById('topupButton');
+  // var idtopupButton = document.getElementById('topupButton');
 
   $(document).ready(function(){
 
@@ -121,16 +168,23 @@
     });
 
     $("#resetButton").click(function() {
-        $('#student_ID').val('');
-        $('#student_name').val('');
-        $('#student_sex').val('');
-        $('#student_Money').val('');
-        $("#checkInputIDC").val('');
-        $("#inputTopup").val('');
-        $("#checkInputIDC").select();
-        $("#inputTopup").attr('readonly',true);
+        // Reset function
+        Reset_btn()
     });
 
+    $("#alertInputid").keyup(function(event) {
+      if (event.keyCode === 13) {
+        $("#closeModalinputid").click();
+        $("#checkInputIDC").select();
+      }
+    })
+
+    $("#alertInputCash").keyup(function(event) {
+      if (event.keyCode === 13) {
+        $("#closeModalinputcash").click();
+        $("#inputTopup").select();
+      }
+    })
 
     // send IDcard or student id and get user data
     $("#checkIDCButton").click(function(){ 
@@ -139,10 +193,12 @@
       // console.log("ID card : " + checkIDC);
       // alert(checkIDC);
       if (checkIDC === "") {
-        alert('Please input Id card.');
+        // alert('Please input Id card.');
+        $("#alertInputid").modal('show');
       } else {
         console.log("ID card : " + checkIDC);
-        $("#checkIDCButton").attr("disabled",true);  
+        $("#checkIDCButton").attr("disabled",true);
+        $("#checkInputIDC").attr('readonly',true);  
         $.ajax({
           url: '/admin/checkStudentProfile',
           type: 'POST',
@@ -165,9 +221,11 @@
             setTimeout(function() {
               $('#topupstatus').html('[Top-up status]');
             },delay)
-            $("#resetButton").click();
-            $("#checkInputIDC").select();
-            $("#checkIDCButton").attr("disabled",false);
+            // Reset function
+            Reset_btn()
+            // $("#resetButton").click();
+            // $("#checkInputIDC").select();
+            // $("#checkIDCButton").attr("disabled",false);
           }
         })
       }
@@ -180,7 +238,8 @@
      $("#topupButton").click(function(){
         var topupBaht = $("#inputTopup").val();
         if (topupBaht === "") {
-          alert('Please input price.');
+          // alert('Please input price.');
+          $("#alertInputCash").modal('show');
         } else {
           // console.log("user data : " + JSON.parse(JSON.stringify(data[0])));
             console.log("Price : " + topupBaht);
@@ -208,13 +267,33 @@
                 },delay)
               }  
             })
-          $("#resetButton").click();
-          $("#checkInputIDC").select();
-          $("#checkIDCButton").attr("disabled",false);  
-          $("#inputTopup").attr('readonly',true);
+          // Reset function
+          Reset_btn()
+          // $("#resetButton").click();
+          // $("#checkInputIDC").select();
+          // $("#checkIDCButton").attr("disabled",false);  
+          // $("#inputTopup").attr('readonly',true);
           };
         });
                         
   });
+
+  function Reset_btn() {
+    // Input Student ID or ID Card
+    $("#checkInputIDC").val('');
+    $("#checkInputIDC").attr('readonly',false); 
+    // btn Check Student ID or ID Card
+    $("#checkIDCButton").attr("disabled",false); 
+    // user data
+    $('#student_ID').val('');
+    $('#student_name').val('');
+    $('#student_sex').val('');
+    $('#student_Money').val('');
+    // Input cash
+    $("#inputTopup").val('');
+    $("#inputTopup").attr('readonly',true);
+    // init select input box > Input Student ID or ID Card
+    $("#checkInputIDC").select();
+  }
 
 </script>

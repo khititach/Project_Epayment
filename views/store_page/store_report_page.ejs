@@ -1,9 +1,9 @@
 <div class="container mb-5">
     <h1 class="card card-body text-center mt-3 mb-3">Store name : <%= storename %></h1>
     <div class="card card-body">
-        <div class="form-group col-lg-3">
-            <h3>Select Date</h3>
-            <div class='input-group date' id='datepicker'>
+        <h3>Select Date</h3>
+        <div class="form-group row">
+            <div class='input-group date col-lg-3' id='datepicker'>
                 <form action="/store/store_report/select_date/1" method="GET" id="formAutoSubmit" autocomplete="off">
                     <input type='text' name="date" class="form-control" id="datepickerVal" />
                     <span class="input-group-addon">
@@ -11,6 +11,9 @@
                     </span>
                 </form>
             </div>
+            <% if (selected_date != '') {%>
+                <a href="/store/store_report/1" class="btn btn-primary col-lg-2" value="back">Show All</a>
+            <%}%>
         </div>
         <h2>Account</h2>
         <table class="table table-striped table-bordered">
@@ -23,6 +26,14 @@
                 </tr>
             </thead>
             <tbody>
+            <% if (ResStoreHistory == '') {%>
+                <tr>
+                    <td colspan="7">
+                        <h3 class="text-center">History not found</h3>
+                        
+                    </td>
+                </tr>
+            <%} else {%>
                 <% for (var i = 0; i < ResStoreHistory.length; i++ ) { %>
                     <tr>
                         <td><%= ResStoreHistory[i].date.getDate() + "/" + (ResStoreHistory[i].date.getMonth()+1) + "/" + ResStoreHistory[i].date.getFullYear() %></td>
@@ -31,37 +42,71 @@
                         <td><%= ResStoreHistory[i].deposit %> Baht</td>
                     </tr>
                 <%}%>
+            <%}%>
             </tbody>
         </table>  
-        <% if (pages > 0 ) {%>
-            <div class="d-flex justify-content-center">
-                <ul class="pagination">
-                    <% if (current == 1 ) {%>
-                        <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
-                    <%} else {%>
-                        <li class="page-item"><a class="page-link" href="/store/store_report/1">First</a></li>
-                    <%}%>
-                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-                    <% if (i !== 1) {%>
-                        <li class="page-item disabled"><a class="page-link">...</a></li>
-                    <%}%>
-                    <% for (; i <= (Number(current) + 4 ) && i <= pages; i++) {%>
-                        <% if ( i == current ) {%>
-                            <li class="page-item active"><a class="page-link"><%= i %></a></li>
+        <% if (selected_date == '') {%>
+            <% if (pages > 0 ) {%>
+                <div class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        <% if (current == 1 ) {%>
+                            <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
                         <%} else {%>
-                            <li class="page-item"><a class="page-link" href="/store/store_report/<%= i %>"><%= i %></a></li> 
-                        <%}%> 
-                        <% if ( i == Number(current) + 4 && i < pages) {%>
+                            <li class="page-item"><a class="page-link" href="/store/store_report/1">First</a></li>
+                        <%}%>
+                        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                        <% if (i !== 1) {%>
                             <li class="page-item disabled"><a class="page-link">...</a></li>
                         <%}%>
-                    <%}%>
-                    <% if (current == pages ) {%>
-                        <li class="page-item disabled"><a class="page-link">Last</a></li>
-                    <%} else {%>
-                        <li class="page-item"><a class="page-link" href="/store/store_report/<%= pages %>">&raquo;</a></li>
-                    <%}%>
-                </ul>
-            </div>
+                        <% for (; i <= (Number(current) + 4 ) && i <= pages; i++) {%>
+                            <% if ( i == current ) {%>
+                                <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                            <%} else {%>
+                                <li class="page-item"><a class="page-link" href="/store/store_report/<%= i %>"><%= i %></a></li> 
+                            <%}%> 
+                            <% if ( i == Number(current) + 4 && i < pages) {%>
+                                <li class="page-item disabled"><a class="page-link">...</a></li>
+                            <%}%>
+                        <%}%>
+                        <% if (current == pages ) {%>
+                            <li class="page-item disabled"><a class="page-link">Last</a></li>
+                        <%} else {%>
+                            <li class="page-item"><a class="page-link" href="/store/store_report/<%= pages %>">&raquo;</a></li>
+                        <%}%>
+                    </ul>
+                </div>
+            <%}%>
+        <%} else { %>
+            <% if (pages > 0 ) {%>
+                <div class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        <% if (current == 1 ) {%>
+                            <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                        <%} else {%>
+                            <li class="page-item"><a class="page-link" href="/store/store_report/select_date/1?date=<%= selected_date %>">First</a></li>
+                        <%}%>
+                        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                        <% if (i !== 1) {%>
+                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                        <%}%>
+                        <% for (; i <= (Number(current) + 4 ) && i <= pages; i++) {%>
+                            <% if ( i == current ) {%>
+                                <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                            <%} else {%>
+                                <li class="page-item"><a class="page-link" href="/store/store_report/select_date/<%= i %>?date=<%= selected_date %>"><%= i %></a></li> 
+                            <%}%> 
+                            <% if ( i == Number(current) + 4 && i < pages) {%>
+                                <li class="page-item disabled"><a class="page-link">...</a></li>
+                            <%}%>
+                        <%}%>
+                        <% if (current == pages ) {%>
+                            <li class="page-item disabled"><a class="page-link">Last</a></li>
+                        <%} else {%>
+                            <li class="page-item"><a class="page-link" href="/store/store_report/select_date/<%= pages %>?date=<%= selected_date %>"">&raquo;</a></li>
+                        <%}%>
+                    </ul>
+                </div>
+            <%}%>
         <%}%>
         <div class="container ">
             <a style="float: left;" href="/" class="btn btn-info" >PDF Download</a>

@@ -1,14 +1,20 @@
 <!-- income page -->
 <h1>select date</h1>  
     <!-- ver.1 -->
-<div class='input-group date' id='datepicker'>
-    <form action="/student/history/income/selected_date/1" method="GET" id="formAutoSubmit" autocomplete="off">
-        <input type='text' name="date" class="form-control" id="datepickerVal" />
-        <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-        </span>
-    </form>
+<div class="form-group row">
+    <div class='input-group date col-lg-3' id='datepicker'>
+        <form action="/student/history/income/selected_date/1" method="GET" id="formAutoSubmit" autocomplete="off">
+            <input type='text' name="date" class="form-control" id="datepickerVal" />
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </form>  
+    </div> 
+    <% if (selected_date != '') {%>
+        <a href="/student/history/income/1" class="btn btn-primary col-lg-2" value="back">Show All</a>
+    <%}%>
 </div>
+
 
 <h2>Account</h2>
 <div class="container">
