@@ -510,13 +510,17 @@ router.post('/topup',(req ,res) => {
     })
 });
 
-    // Edit Store page
+
+// ***************** incomplete ************
+// Edit Store page
 router.get('/edit_store',(req,res) => {
     var admin_name = req.session.passport.user.name;
-    User.find({role:'store'},(err,users)=>{
+    User
+    .find({role:'store'}).sort({ username: 'asc' })
+    .exec((err,users)=>{
         if (err) {
             res.send('ERROR something.');
-            next();
+            throw err;
         } else {
             // res.json(users);
             var datausers = users;
@@ -525,7 +529,7 @@ router.get('/edit_store',(req,res) => {
                 admin_name
             });
         }
-    }).sort({ username: 'asc' });
+    })
 });
 
     // Edit Password Store 
@@ -537,6 +541,7 @@ router.post('/edit_store_password',(req, res) => {
     } = req.body ;
     console.log("Name : " + nameValue);
     console.log("New Password require : " + newstorepassword);
+
     const newPassword = User.generateHash(newstorepassword)
     User.updateOne({name:nameValue},{password:newPassword},(err) => {
         if (err) {
@@ -546,14 +551,16 @@ router.post('/edit_store_password',(req, res) => {
         req.flash('success_msg' ,'Password '+ nameValue +' change success.');
         res.redirect('/admin/edit_store');
     });
-    // req.flash('success_msg' ,'Password change success.');
-    // res.redirect('/admin/edit_store');
+
+    req.flash('success_msg' ,'Password change success.');
+    res.redirect('/admin/edit_store');
 });
 
     // Edit Remove Store 
 router.post('/edit_store_remove',(req, res) => {
     const removeUser = req.body.nameValueRemove;
     console.log('Name User to Remove : ' + removeUser);
+    
     User.deleteOne({name:removeUser},(err) => {
         if (err) {
             console.log('ERROR > Delete User fail > ' + err);
@@ -568,11 +575,13 @@ router.post('/edit_store_remove',(req, res) => {
         })
        
     })
-    // req.flash('success_msg' ,'Remove success.');
-    // res.redirect('/admin/edit_store');
+
+    req.flash('success_msg' ,'Remove success.');
+    res.redirect('/admin/edit_store');
+
 });
 
-
+// ***************** incomplete ************
 
 
 // ---------------------------- test page ----------------------------

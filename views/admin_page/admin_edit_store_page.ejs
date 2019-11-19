@@ -1,7 +1,6 @@
 <div class="container mt-5">
-    <h1 class="card card-body text-center mt-3 mb-3">Admin : <%= admin_name %></h1>
+    <h1 class="card card-body text-center mt-3 mb-3">Admin : <%= admin_name %> </h1>
     <div class="card card-body text-center mb-3">
-        <% include ../partials/messages %>
         <div>
             <h2>Change Password / Remove Store</h2>
         </div>
@@ -16,15 +15,15 @@
                         <td>Remove</td>
                     </tr>
                 </thead>
-                <% datausers.forEach(function(datausers,index) {%>
-                <tr>
-                  <td><%= datausers.role %></td>
-                  <td><%= datausers.username %></td>
-                  <td><%= datausers.name %></td>
-                  <td><input type="button" class="btn btn-info trigger" value="change" data-toggle="modal" data-target="#changepass" onclick="setValue('<%= datausers.name %>')"></td>
-                  <td><input type="button" class="btn btn-secondary" value="remove" data-toggle="modal" data-target="#removeStore" onclick="setValueremove('<%= datausers.name %>')"></td>
-                </tr>
-                <% } ); %>
+                  <% for (var i = 0 ; i < datausers.length ; i++) {%>
+                    <tr>
+                      <td><%= datausers[i].role %></td>
+                      <td><%= datausers[i].username %></td>
+                      <td><%= datausers[i].name %></td>
+                      <td><input type="button" class="btn btn-info trigger" value="change" onclick="show_modal_changepass()"></td>
+                      <td><input type="button" class="btn btn-secondary" value="remove" onclick="show_modal_remove()"></td>
+                    </tr>
+                  <% }%>       
             </table>
         </div>
         <a style="float: left;" href="/" class="btn btn-primary mb-3" value="back">Back to Homepage</a>
@@ -33,73 +32,63 @@
 
 <!-- Modal Change Password -->
 <div class="modal fade" id="changepass" tabindex="-1" role="dialog" aria-labelledby="changepassLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="changepassLabel">Change password</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form action="/admin/edit_store_password" method="POST">
-                <div class="modal-body">
-                    <input type="hidden" id="setValueIndex" name="nameValue" readonly>
-                    <input class="form-control form-control-lg" type="text" id="newPassword" name="newstorepassword" placeholder="New Password"> 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form> 
-          </div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changepassLabel">Change password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-<!-- Modal Change Password -->
-
-<!-- Modal Remove Store -->
-<div class="modal fade" id="removeStore" tabindex="-1" role="dialog" aria-labelledby="RemoveStoreLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="RemoveStoreLabel">Remove</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <form action="/admin/edit_store_password" method="POST">
+            <div class="modal-body">
+                <input type="hidden" id="setValueIndex" name="nameValue" readonly>
+                <input class="form-control form-control-lg" type="text" id="newPassword" name="newstorepassword" placeholder="New Password"> 
             </div>
-            <form action="/admin/edit_store_remove" method="POST">
-              <div class="modal-body">
-                    <h2>Do you want to remove?</h2>
-                    <input type="hidden" id="setValueremove" name="nameValueRemove" readonly>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-                  <button type="submit" class="btn btn-primary">Yes</button>
-              </div>
-            </form> 
-          </div>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form> 
       </div>
-<!-- Modal Remove Store -->
+    </div>
+  </div>
+  <!-- Modal Change Password -->
+  
+  <!-- Modal Remove Store -->
+  <div class="modal fade" id="removeStore" tabindex="-1" role="dialog" aria-labelledby="RemoveStoreLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="RemoveStoreLabel">Remove</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="/admin/edit_store_remove" method="POST">
+          <div class="modal-body">
+                <h2>Do you want to remove?</h2>
+                <input type="hidden" id="setValueremove" name="nameValueRemove" readonly>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+              <button type="submit" class="btn btn-primary">Yes</button>
+          </div>
+        </form> 
+      </div>
+    </div>
+  </div>
+  <!-- Modal Remove Store -->
 
 
 <script>
 
-  var createInput = document.getElementById('usernameNewPass');
-  var textInput = document.createTextNode("<%= datausers.username %>")
-
-  // Set Value Modal
-  function setValue(i) {
-    document.getElementById('setValueIndex').value = i;
-  }
-
-  function setValueremove(i) {
-    document.getElementById('setValueremove').value = i;
-  }
-
-  // Modal
-  $('#myModal').on('shown.bs.modal', function () {
-      $('#myInput').trigger('focus')
-  })
+function show_modal_changepass() {
+  $("#changepass").modal('show');
   
-  
+}
+
+function show_modal_remove() {
+  $("#removeStore").modal('show');
+}
 </script>
