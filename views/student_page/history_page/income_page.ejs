@@ -62,7 +62,7 @@
                     <% if (current == 1) { %>
                         <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
                     <% } else { %>
-                        <li class="page-item"><a class="page-link" href="/student/history/income/1">First</a></li>
+                        <li class="page-item"><a class="page-link" href="/student/history/income/1">หน้าแรก</a></li>
                     <% } %>
                     <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
                     <% if (i !== 1) { %>
@@ -79,7 +79,7 @@
                         <% } %>
                     <% } %>
                     <% if (current == pages) { %>
-                        <li class="page-item disabled"><a class="page-link">Last</a></li>
+                        <li class="page-item disabled"><a class="page-link">หน้าสุดท้าย</a></li>
                     <% } else { %>
                         <li class="page-item"><a class="page-link" href="/student/history/income/<%= pages %>">&raquo;</a></li>
                     <% } %>
@@ -93,7 +93,7 @@
                     <% if (current == 1) { %>
                         <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
                     <% } else { %>
-                        <li class="page-item"><a class="page-link" href="/student/history/income/selected_date/1?date=<%= selected_date %>">First</a></li>
+                        <li class="page-item"><a class="page-link" href="/student/history/income/selected_date/1?date=<%= selected_date %>">หน้าแรก</a></li>
                     <% } %>
                     <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
                     <% if (i !== 1) { %>
@@ -110,7 +110,7 @@
                         <% } %>
                     <% } %>
                     <% if (current == pages) { %>
-                        <li class="page-item disabled"><a class="page-link">Last</a></li>
+                        <li class="page-item disabled"><a class="page-link">หน้าสุดท้าย</a></li>
                     <% } else { %>
                         <li class="page-item"><a class="page-link" href="/student/history/income/selected_date/<%= pages %>?date=<%= selected_date %>">&raquo;</a></li>
                     <% } %>

@@ -2,7 +2,9 @@
 <div class="container mt-5">
         <% include ../partials/messages %>
         <hr class="my-4">
-        <h1>ชื่อ <%= user.name %></h1>
+        <div class="d-flex justify-content-center">
+          <h1 >ชื่อ <%= user.name %></h1>
+        </div>
         <hr class="my-4">
       </div>
       
@@ -16,9 +18,9 @@
                   <a href="/admin/register" class="btn btn-primary btn-block mb-2">ลงทะเบียน</a>
                 </div>
                 <div class="card card-body text-center mb-3">
-                  <label style="color: black">Edit Store</label>
-                  <label>Change Password or Remove Store</label>
-                  <a href="/admin/edit_store" class="btn btn-info btn-block col-lg-5 m-auto">Edit Store</a>  
+                  <label style="color: black">แก้ไขร้านค้า</label>
+                  <label>ลบร้านค้า</label>
+                  <a href="/admin/edit_store" class="btn btn-info btn-block col-lg-5 m-auto">แก้ไขร้านค้า</a>  
                 </div>
             </div>
             

@@ -465,8 +465,8 @@ router.get('/checkStudentProfile/:id?',(req, res) => {
     // console.log("---------- New ORDER ----------");
     console.log("ID card for nodemcu: " + getIDCorStuID);
     
-    dataforWs = getIDCorStuID;
-
+    // dataforWs = getIDCorStuID;
+    res.send("ID card for nodemcu: " + getIDCorStuID);
     // res.redirect(req.get('referer'));
     // req.get('referer')
     // res.send('number : ' + countNumber());
