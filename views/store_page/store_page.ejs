@@ -2,14 +2,14 @@
         <div class="row mt-5">
           <div class="col-lg-4">
             <div class="card card-body text-center mb-3">
-              <h2 style="color: black">Store own</h2>
+              <h2 style="color: black">เจ้าของร้าน</h2>
               <h2><%= user.name %></h2>
-              <h2 style="color: black">Store NO.</h2>
+              <h2 style="color: black">เลขที่ร้าน</h2>
               <h2><%= StoreDataFound.storeNO %></h2>
             </div>
             <div class="card card-body text-center mb-3">
-              <h2 style="color: black">Store Report</h2>
-              <a class="btn btn-primary" href="/store/store_report/1" v>Report</a>
+              <h2 style="color: black">แบบรายงานรายได้</h2>
+              <a class="btn btn-primary" href="/store/store_report/1" v>รายงาน</a>
             </div>
             <div class="card card-body text-center mb-3">
               <h2 style="color: black">Store Category</h2>
@@ -20,22 +20,22 @@
     <div class="col-lg-8 mb-5">
       <div class="card card-body ml-3" id="FixScrollBar">
         <div class="row" style="margin-right:1%">
-          <h1 class="text-center col-lg-8" style="color: black">Money Box</h1>
-          <span class="text-center col-lg-4 card card-body" id="buystatus" style="font-size: 20px;color:blue;padding: 2% 1% 2% 1%">[Buy status]</span>
+          <h1 class="text-center col-lg-8" style="color: black">ชำระเงิน</h1>
+          <span class="text-center col-lg-4 card card-body" id="buystatus" style="font-size: 20px;color:blue;padding: 2% 1% 2% 1%">[สถานะการซื้อ]</span>
         </div>
           <!-- <form action=""> -->
               <div class="form-group mt-3">
-                  <h3 style="color: black">ID Card or Student ID</h3>
+                  <h3 style="color: black">ID Card หรือ รหัสนักเรียน</h3>
                   <table>
                     <tr>
-                      <td style="width:90%">
+                      <td style="width:83%">
                         <div class="form-group m-auto" > 
                           <input class="form-control form-control-lg" type="text" placeholder="Enter ID Card or Student ID" id="checkInputIDC">
                         </div>
                       </td>
                       <td>
                         <div style="margin-left: 10px">
-                          <button type="submit" class="btn btn-info" id="checkIDCButton">Check</button>
+                          <button type="submit" class="btn btn-info" id="checkIDCButton">ตรวจสอบ</button>
                         </div>
                       </td>
                     </tr>
@@ -44,30 +44,30 @@
 
                   
                   <div style="font-size: 30px;" class="mb-3 mt-3">
-                    <h3 style="color: black">Detail</h3>
+                    <h3 style="color: black">ข้อมูลนักเรียน</h3>
                         <table style="margin-left: 10px">
                           <tr>
-                            <td>Student ID</td>
+                            <td>รหัสนักเรียน</td>
                             <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_ID" value=""></td>
                           </tr>
                           <tr>
-                            <td>Name</td>
+                            <td>ชื่อ</td>
                             <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_name" value=""></td>
                           </tr>
                           <tr>
-                            <td>Sex</td>
+                            <td>เพศ</td>
                             <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_sex" value=""></td>
                           </tr>
                           <tr>
-                            <td>Money</td>
+                            <td>ยอดเงินที่ใช้ได้</td>
                             <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_Money" value=""></td>
                           </tr>
                         </table>
                   </div>
-                  <h3 style="color: black">Input price</h3>
+                  <h3 style="color: black">กรอกจำนวนเงิน</h3>
                   <div class="form-group">
                     <div class="input-group mb-3" >
-                      <input type="number" style="font-size: 50px;" id="inputprice" class="form-control" placeholder="input price" min="0" aria-label="Amount (to the nearest baht)" readonly>
+                      <input type="number" style="font-size: 50px;" id="inputprice" class="form-control" placeholder="กรอกจำนวนเงิน" min="0" aria-label="Amount (to the nearest baht)" readonly>
                       <div class="input-group-prepend">
                         <span class="input-group-text">฿</span>
                       </div>
@@ -75,7 +75,7 @@
                   </div>
                   <div>
                     <input type="button" id="submitPriceButton" style="font-size: 30px" class="btn btn-primary" value="คิดเงิน">
-                    <input type="button" id="resetButton" style="font-size: 30px" class="btn btn-secondary" value="reset">
+                    <input type="button" id="resetButton" style="font-size: 30px" class="btn btn-secondary" value="ล้างข้อมูล">
                   </div>
               </div>
             </div>
@@ -88,16 +88,16 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="alertInputidLabel">Alert!</h4>
+        <h4 class="modal-title" id="alertInputidLabel">แจ้งเตือน</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <h5 class="modal-title" id="alertInputCashLabel">Please input student ID or ID Card.</h5>
+          <h5 class="modal-title" id="alertInputCashLabel">กรุณาใส่ ID Card หรือ รหัสนักเรียน </h5>
       </div>
       <div class="modal-footer">
-          <button type="button" id="closeModalinputid" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="closeModalinputid" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
       </div>
     </div>
   </div>
@@ -110,13 +110,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="alertInputCashLabel">Alert!</h4>
+        <h4 class="modal-title" id="alertInputCashLabel">แจ้งเตือน</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <h5 class="modal-title" id="alertInputCashLabel">Please input price.</h5>
+          <h5 class="modal-title" id="alertInputCashLabel">กรุณาใส่จำนวนเงิน</h5>
       </div>
       <div class="modal-footer">
           <button type="button" id="closeModalinputcash" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -221,7 +221,7 @@
         console.log('Msg error : ' + JSON.stringify(msgError));
         $('#buystatus').html('<span style="color:black;background-color: red;border-radius: 5px;">'+msgError.responseText+'</span>')
         setTimeout(function() {
-          $('#buystatus').html('[Buy status]');
+          $('#buystatus').html('[สถานะการซื้อ]');
         },delay)
         Reset_btn()
         // $("#resetButton").click();
@@ -245,14 +245,14 @@
         console.log('Message back : ' + databack);
         $('#buystatus').html('<span style="color:black;background-color: lime;border-radius: 5px;">'+databack+'</span>')
         setTimeout(function() {
-          $('#buystatus').html('[Buy status]');
+          $('#buystatus').html('[สถานะการซื้อ]');
         },delay)
       },error:function(msgError){
         console.log('Post data failure.');
         console.log('Message error back : ' + JSON.stringify(msgError));
         $('#buystatus').html('<span style="color:white;background-color: red;border-radius: 5px;">'+JSON.stringify(msgError.responseText)+'</span>')
         setTimeout(function() {
-          $('#buystatus').html('[Buy status]');
+          $('#buystatus').html('[สถานะการซื้อ]');
         },delay)
       }
     })

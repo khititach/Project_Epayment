@@ -1,0 +1,37 @@
+<h3 class="text-center"> --------- Chart ---------</h3>
+<canvas id="studentIncomeChart" width="400" height="200"></canvas>
+<%= chart_data_json.deposit %>
+<h3 class="text-center"> --------- Chart ---------</h3>
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
+<!-- Chart.js -->
+
+<script>
+
+    
+    function generate_income_chart() {
+        var ctx = document.getElementById('studentIncomeChart');
+        var studentIncomeChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [500, 370, 450, 250, 400, 300],
+                    borderWidth: 5
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+    
+</script>

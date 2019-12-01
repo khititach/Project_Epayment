@@ -44,45 +44,46 @@ router.post('/register_user_auto_check',(req , res ) => {
 });
 
     // Register Admin
-// router.post('/register_admin',(req  ,res ) =>{
-//     const { 
-//         role, 
-//         username,
-//         password,
-//         name  
-//     } = req.body;
-//     let errors = [];
+router.post('/register_admin',(req  ,res ) =>{
+    res.send("Contact Admin.")
+    // const { 
+    //     role, 
+    //     username,
+    //     password,
+    //     name  
+    // } = req.body;
+    // let errors = [];
 
-//     if (!role || !username || !password || !name) {
-//         errors.push({ msg : 'Please fill all fields.'});
-//         res.render('./admin_page/admin_register_page',{   
-//             errors,
-//             role, 
-//             username,
-//             password,
-//             name});    
-//     } else { 
-//         User.findOne({$or:[{username:username},{name:name}]},(req,res,err) => {
-//             if (err) {
-//                 throw err;
-//             }
-//             const newUser = new User({
-//                 role, 
-//                 username,
-//                 password:User.generateHash(password),
-//                 name  
-//             });
-//             newUser.save()
-//             .then(user => {
-//                 // req.flash('success_msg','Register complete.');
-//                 res.redirect('/');
-//             })
-//             .catch(err => console.log("Error part 6 > can't save user data > " + err));
+    // if (!role || !username || !password || !name) {
+    //     errors.push({ msg : 'Please fill all fields.'});
+    //     res.render('./admin_page/admin_register_page',{   
+    //         errors,
+    //         role, 
+    //         username,
+    //         password,
+    //         name});    
+    // } else { 
+    //     User.findOne({$or:[{username:username},{name:name}]},(req,res,err) => {
+    //         if (err) {
+    //             throw err;
+    //         }
+    //         const newUser = new User({
+    //             role, 
+    //             username,
+    //             password:User.generateHash(password),
+    //             name  
+    //         });
+    //         newUser.save()
+    //         .then(user => {
+    //             // req.flash('success_msg','Register complete.');
+    //             res.redirect('/');
+    //         })
+    //         .catch(err => console.log("Error part 6 > can't save user data > " + err));
             
-//         });
-//     }
+    //     });
+    // }
 
-// });
+});
 
 
     // Register Student V2 - part User
@@ -132,6 +133,7 @@ router.post('/register_user',(req, res, next) => {
     });
 
 });
+
     // Register Student V2 - part student detail
 router.post('/register_student_page2',(req, res,next) => {
     const {
@@ -193,6 +195,7 @@ router.post('/register_student_page2',(req, res,next) => {
     });
 
 });
+
     // Register Student - auto check idcard and stuID
 router.post('/register_student_auto_check',(req,res) => {
     var nameField = req.body.nameinputField_regStuPage;
@@ -428,8 +431,9 @@ router.post('/register_store_auto_check',(req,res) => {
 })
 
     // Check student
-router.post('/checkStudentProfile',(req, res) => {
-    var getIDCorStuID = req.body.idcardorstuid;
+router.post('/checkStudentProfile/',(req, res) => {
+    var getIDCorStuID = req.body.idcardorstuid || req.params.id;
+    // var getIDCorStuID = req.params.id;
     console.log("---------- New ORDER ----------");
     console.log("Receive ID card or student ID : " + getIDCorStuID);
     
@@ -440,7 +444,7 @@ router.post('/checkStudentProfile',(req, res) => {
         }
         if (!FoundStudentData) {
             console.log('User Not Found.');
-            msgback = 'User Not Found.';
+            msgback = 'ไม่พบผู้ใช้งาน';
             res.send(msgback);
         } else {
             console.log("Found student data part check : " + FoundStudentData);
@@ -449,9 +453,72 @@ router.post('/checkStudentProfile',(req, res) => {
         }
 
     });
-    
-
 });
+
+//*********** test get/post from nodemcu  ***************//
+
+router.get('/checkStudentProfile',(req ,res) => res.render('./admin_page/test_page/test_page_3'))
+    // Check student by GET
+router.get('/checkStudentProfile/:id?',(req, res) => {
+    var getIDCorStuID = req.body.idcardorstuid || req.params.id;
+    // var getIDCorStuID = req.params.id;
+    // console.log("---------- New ORDER ----------");
+    console.log("ID card for nodemcu: " + getIDCorStuID);
+    
+    dataforWs = getIDCorStuID;
+
+    // res.redirect(req.get('referer'));
+    // req.get('referer')
+    // res.send('number : ' + countNumber());
+
+    // Model_student.findOne({$or:[{stuID:getIDCorStuID},{idcard:getIDCorStuID}]},(err, FoundStudentData) => {
+    //     if (err) {
+    //         console.log('Error find student.');
+    //         throw err;
+    //     }
+    //     if (!FoundStudentData) {
+    //         console.log('User Not Found.');
+    //         msgback = 'User Not Found.';
+    //         res.send(msgback);
+    //     } else {
+    //         console.log("Found student data part check : " + FoundStudentData);
+    //         global.UserData = FoundStudentData;
+
+    //         if (!req.params.id) {
+    //             res.send(FoundStudentData);
+    //         } else {
+    //             res.render('./admin_page/test_page/test_page_2',{FoundStudentData});
+    //         }
+            
+    //     }
+
+    // });
+});
+
+// var server = require('ws').Server;
+// var s = new server({ port : 5001});
+
+// var i = 0;
+// function countNumber() {
+//     setTimeout(function() {
+//         i += 1;
+//         console.log(i);
+//         return countNumber();
+//     }, 1000);
+// }
+
+// var test = ["t1","e2","s3","t4","t5","e6","s7","t8",]
+// s.on('connection',(ws) => {
+//     ws.on('message',(message) => {
+//         console.log("Received : " + message);
+//         if (message == 'WsClientOpen') {
+//             ws.send(countNumber())
+//         }
+        
+//     })
+// })
+
+//*********** test get/post from nodemcu  ***************//
 
     // Top-up
 router.post('/topup',(req ,res) => {
@@ -496,10 +563,10 @@ router.post('/topup',(req ,res) => {
         RecordHistory.save((err) => {
             if (err) {
                 console.log('ERROR > Record history fail > ' + err);
-                msgback = ['Top-up failure'];
+                msgback = ['ไม่สามารถเติมเงินได้'];
                 res.send(msgback);
             }
-            msgback = ['Top-up success'];
+            msgback = ['เติมเงินสำเร็จ'];
             console.log("Top-up and save history success.");
             console.log("---------- END ORDER ----------");
         
@@ -584,7 +651,9 @@ router.post('/edit_store_remove',(req, res) => {
 // ***************** incomplete ************
 
 
-// ---------------------------- test page ----------------------------
+
+
+// ********************** test page *****************************
 
 const Model_Category = require('../model/model_category');
 
@@ -773,8 +842,33 @@ router.post('/postdata',(req,res) => {
 
    //------------ test data post get----------------
 
+// test page > chart
+router.get('/test_page_chart',(req , res ) => {
+    const chart_data = [
+        {deposit:'20','date':'2019-11-21'},
+        {deposit:'20','date':'2019-11-21'},
+        {deposit:'20','date':'2019-11-21'},
+        {deposit:'20','date':'2019-11-21'},
+        {deposit:'20','date':'2019-11-21'},
+    ];
 
-// ---------------------------- test page ----------------------------
+    var chart_data_json = JSON.stringify(chart_data)
+
+    console.log("Chart Data : " + JSON.stringify(chart_data));
+    // res.send(chart_data)
+    res.render('./admin_page/test_page/test_page_1',{chart_data_json})
+})
+
+// test page get data from arduino
+router.post('/test_page_arduino/:id?',(req ,res) => {
+    var id = req.params.id;
+
+    console.log("ID Card : "+ id)
+    // var msg = id +" > test get data from arduino success."
+    res.send("ID card : " + id);
+})
+
+// ********************** test page *****************************
 
 
 module.exports = router;

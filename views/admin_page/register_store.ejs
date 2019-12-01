@@ -2,11 +2,11 @@
   <div class="col-md-6 m-auto">
     <div class="card card-body">
       <h1 class="text-center mb-3">
-      <i class="fas fa-user-plus"></i> Register Store</h1>
+      <i class="fas fa-user-plus"></i> ลงทะเบียนร้านค้า</h1>
       <% include ../partials/messages %>
       <form action="/admin/register_store_page2" method="POST">
         <div class="form-group">
-          <label for="storeOwner">Store Owner</label>
+          <label for="storeOwner">ชื่อเจ้าของร้าน</label>
           <input
             type="text"
             id="insertStoreOwnerID"
@@ -17,7 +17,7 @@
           />
         </div>
         <div class="form-group">
-            <label for="storeNO">Store Number</label>
+            <label for="storeNO">เลขที่ร้าน</label>
             <input
               type="Number" min="0"
               id="storeNO"
@@ -29,7 +29,7 @@
           </div>
         <span class="mb-3" id="alertBackstoreNO"></span>
         <div class="form-group">
-          <label for="name">Store Name</label>
+          <label for="name">ชื่อร้าน</label>
           <input
             type="text"
             id="storeName"
@@ -51,7 +51,7 @@
           />
         </div>
         <div class="form-group">
-          <label for="tel">tel.</label>
+          <label for="tel">เบอร์โทร</label>
           <input
             type="text"
             id="tel"
@@ -63,9 +63,9 @@
         </div>
         <div class="text-center">
               <button type="submit" class="btn btn-primary">
-                      Register
+                      ลงทะเบียน
               </button>
-              <input type="button" class="btn btn-secondary" value="back" onclick="history.back()">
+              <input type="button" class="btn btn-secondary" value="กลับ" onclick="history.back()">
         </div>
       </form>
     </div>

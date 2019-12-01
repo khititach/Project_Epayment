@@ -2,7 +2,7 @@
 <div class="container mt-5">
         <% include ../partials/messages %>
         <hr class="my-4">
-        <h1>Name <%= user.name %></h1>
+        <h1>ชื่อ <%= user.name %></h1>
         <hr class="my-4">
       </div>
       
@@ -10,10 +10,10 @@
       <div class="row mr-auto mb-4" >
             <div class="col-lg-3 ml-auto">
                 <div class="card card-body text-center mb-3">
-                  <h1 style="color: black">Register</h1>
-                  <h3>student officer store</h3>
+                  <h1 style="color: black">ลงทะเบียน</h1>
+                  <h3>นักเรียน ร้านค้า</h3>
                   <img style="height: 100px; width: 100%; display: block; margin-bottom: 20px" src="https://image.flaticon.com/icons/svg/1647/1647909.svg">
-                  <a href="/admin/register" class="btn btn-primary btn-block mb-2">Register</a>
+                  <a href="/admin/register" class="btn btn-primary btn-block mb-2">ลงทะเบียน</a>
                 </div>
                 <div class="card card-body text-center mb-3">
                   <label style="color: black">Edit Store</label>
@@ -26,12 +26,12 @@
               <!-- <form id="formtopup"> -->
                 <div class="card card-body">
                   <div class="row mb-3" style="margin:0 2% 0 2%">
-                    <h1 class="text-center col-lg-8" style="color: black">Top-up</h1>
-                    <span class="text-center col-lg-4 card card-body" id="topupstatus" style="font-size: 20px;color:blue;padding: 2% 2% 2% 2%">[Top-up status]</span>
+                    <h1 class="text-center col-lg-8" style="color: black">เติมเงิน</h1>
+                    <span class="text-center col-lg-4 card card-body" id="topupstatus" style="font-size: 20px;color:blue;padding: 2% 2% 2% 2%">[สถานะการเติมเงิน]</span>
                   </div>
                    
                     
-                    <h3 style="color: black">ID Card or Student ID</h3>
+                    <h3 style="color: black">ID Card หรือ รหัสนักเรียน</h3>
                     <table>
                       <tr>
                         <td>
@@ -41,7 +41,7 @@
                         </td>
                         <td>
                           <div style="margin-left: 10px">
-                              <button type="submit" class="btn btn-info" id="checkIDCButton">Check</button>
+                              <button type="submit" class="btn btn-info" id="checkIDCButton">ตรวจสอบ</button>
                           </div>
                         </td>
                       </tr>
@@ -49,28 +49,28 @@
                       
                      
                   <div class="mt-2">
-                      <h3 style="color: black">Detail</h3>
+                      <h3 style="color: black">ข้อมูลนักเรียน</h3>
                       <table>
                         <tr>
-                          <td>Student ID</td>
+                          <td>รหัสนักเรียน</td>
                           <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_ID" value=""></td>
                         </tr>
                         <tr>
-                          <td>Name</td>
+                          <td>ชื่อ</td>
                           <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_name" value=""></td>
                         </tr>
                         <tr>
-                            <td>Sex</td>
+                            <td>เพศ</td>
                             <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_sex" value=""></td>
                         </tr>
                         <tr>
-                            <td>Money</td>
+                            <td>ยอดเงินที่ใช้ได้</td>
                             <td><input style="padding-left: 10px" type="text" readonly="" class="form-control-plaintext" id="student_Money" value=""></td>
                           </tr>
                       </table>
       
                       <div class="form-group mt-3">
-                        <h3 style="color: black">Input baht</h3>
+                        <h3 style="color: black">กรอกจำนวนเงิน</h3>
                         <div class="form-group">
                           <div class="input-group mb-3">
                             <input type="number" class="form-control" id="inputTopup" placeholder="input baht" min="0" aria-label="Amount (to the nearest baht)" readonly>
@@ -80,8 +80,8 @@
                           </div>
                         </div>
                       </div>
-                      <input type="button" class="btn btn-primary" id="topupButton" value="Topup">
-                      <input type="button" class="btn btn-secondary" id="resetButton" value="reset" >
+                      <input type="button" class="btn btn-primary" id="topupButton" value="เติมเงิน">
+                      <input type="button" class="btn btn-secondary" id="resetButton" value="ล้างข้อมูล" >
                   </div>               
                 </div>
               <!-- </form> -->
@@ -93,16 +93,16 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="alertInputidLabel">Alert!</h4>
+        <h4 class="modal-title" id="alertInputidLabel">แจ้งเตือน</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <h5 class="modal-title" id="alertInputCashLabel">Please input student ID or ID Card.</h5>
+          <h5 class="modal-title" id="alertInputCashLabel">กรุณาใส่ ID Card หรือ รหัสนักเรียน</h5>
       </div>
       <div class="modal-footer">
-          <button type="button" id="closeModalinputid" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+          <button type="button" id="closeModalinputid" class="btn btn-secondary" data-dismiss="modal" >ปิด</button>
       </div>
     </div>
   </div>
@@ -114,16 +114,16 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="alertInputCashLabel">Alert!</h4>
+        <h4 class="modal-title" id="alertInputCashLabel">แจ้งเตือน</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <h5 class="modal-title" id="alertInputCashLabel">Please input cash.</h5>
+          <h5 class="modal-title" id="alertInputCashLabel">กรุณาใส่จำนวนเงิน</h5>
       </div>
       <div class="modal-footer">
-          <button type="button" id="closeModalinputcash" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="closeModalinputcash" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
       </div>
     </div>
   </div>
@@ -131,8 +131,6 @@
 <!-- Modal Alert input cash -->
 
 <script>
-
-  // window.scrollTo(0,180);
 
   document.getElementById('topupstatus').scrollIntoView({
     behavior: 'smooth'
@@ -144,7 +142,7 @@
   // var idtopupButton = document.getElementById('topupButton');
 
   $(document).ready(function(){
-
+    // location.reload();
     $("#checkInputIDC").select();
 
     $("#checkInputIDC").keyup(function(event) {
@@ -219,7 +217,7 @@
             console.log('Msg error : ' + JSON.stringify(msgError));
             $('#topupstatus').html('<span style="color:black;background-color: red;border-radius: 5px;">'+msgError.responseText+'</span>')
             setTimeout(function() {
-              $('#topupstatus').html('[Top-up status]');
+              $('#topupstatus').html('[สถานะการเติมเงิน]');
             },delay)
             // Reset function
             Reset_btn()
@@ -254,7 +252,7 @@
                 // $('#topupstatus').html(msgback);
                 $('#topupstatus').html('<span style="color:black;background-color: lime;border-radius: 5px;">'+msgback+'</span>')
                 setTimeout(function() {
-                  $('#topupstatus').html('[Top-up status]');
+                  $('#topupstatus').html('[สถานะการเติมเงิน]');
                 },delay)
               },
               error:function(msgback){
@@ -263,7 +261,7 @@
                 // $('#topupstatus').html(msgback);
                 $('#topupstatus').html('<span style="color:red">'+msgback+'</span>')
                 setTimeout(function() {
-                  $('#topupstatus').html('[Top-up status]');
+                  $('#topupstatus').html('[สถานะการเติมเงิน]');
                 },delay)
               }  
             })

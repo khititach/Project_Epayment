@@ -4,19 +4,19 @@
       <div class="card border-primary mb-3 col-lg-3" style="margin-left: 20px">
           <img style="height: 200px; width: 100%; display: block; " src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image">
         </div>
-      <h1 class="display-4 col-lg-8 m-auto" style="text-align: left" >Name <%= user.name %></h1>
+      <h1 class="display-4 col-lg-8 m-auto" style="text-align: left" >ชื่อ <%= user.name %></h1>
     </div>
     <div class="form-group " style="padding-left: 5%">
         <input type="file" class="form-control-file " id="exampleInputFile" aria-describedby="fileHelp">
     </div>
     <hr class="my-4">
     <div class="row" style="align-items: center">
-      <h2 class="text-center col-lg-11">Money <%= Datafrompage_one.money %> Baht</h2>
+      <h2 class="text-center col-lg-11"> <%= Datafrompage_one.money %> บาท</h2>
     </div>
     
     <hr class="my-4">
     <div class="row">
-      <h3 class="col-lg-3 ml-3">Student ID</h3>
+      <h3 class="col-lg-3 ml-3">รหัสนักเรียน</h3>
       <h3 class="col-lg-7" ><%= Datafrompage_one.stuID %></h3>
     </div>
     <div class="row">
@@ -24,27 +24,27 @@
       <h3 class="col-lg-7" ><%= Datafrompage_one.email %></h3>
     </div>
     <div class="row">
-      <h3 class="col-lg-3 ml-3">Sex</h3>
+      <h3 class="col-lg-3 ml-3">เพศ</h3>
       <h3 class="col-lg-7" ><%= Datafrompage_one.sex %></h3>
     </div>
     <div class="row">
-      <h3 class="col-lg-3 ml-3">Tel.</h3>
+      <h3 class="col-lg-3 ml-3">เบอร์โทร</h3>
       <h3 class="col-lg-7" ><%= Datafrompage_one.tel %></h3>
     </div>
 
     
     <hr class="my-4">
-    <h2 style="color: black">Change Password</h2> 
+    <h2 style="color: black">เปลี่ยนรหัสผ่าน</h2> 
     <% include ../partials/messages %>
     <form action="/student/changepassword" method="POST">
         <div class="form-group"  style="padding-left: 15px">
-        <h4 for="exampleInputPassword1" style="padding-right: 5%;padding-top:7px;color: black">New Password</h4>
+        <h4 for="exampleInputPassword1" style="padding-right: 5%;padding-top:7px;color: black">รหัสผ่านใหม่</h4>
             <input type="password" class="form-control " name="changePassword" id="changePassword" placeholder="Password">
-        <h4 for="exampleInputPassword1" style="padding-right: 5%;padding-top:7px;color: black">Re-type New Password</h4>
+        <h4 for="exampleInputPassword1" style="padding-right: 5%;padding-top:7px;color: black">ยืนยัน รหัสผ่านใหม่</h4>
             <input type="password" class="form-control" name="changePasswordretype" id="changePasswordretype" placeholder="Re-type Password">
         <div class="mt-2">
-            <button type="submit" class="btn btn-primary">Change</button>
-            <a style="float: right" href="/" class="btn btn-secondary" value="back" >back</a>
+            <button type="submit" class="btn btn-primary">เปลี่ยน</button>
+            <a style="float: right" href="/" class="btn btn-secondary" value="back" >กลับหน้าหลัก</a>
         </div>
         </div>  
     </form>           

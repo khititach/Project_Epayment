@@ -228,7 +228,7 @@ router.post('/check_student_profile',(req ,res ) => {
         }
         if (!FoundStudentData) {
             console.log('User Not Found.');
-            msgback = 'User Not Found.';
+            msgback = 'ไม่พบผู้ใช้งาน';
             res.send(msgback);
         } else {
             console.log("Found student data part check : " + FoundStudentData);
@@ -380,7 +380,7 @@ router.post('/buy_item',(req ,res ) => {
 
         const idcard = userDataFound.idcard;
         const stuID = userDataFound.stuID;
-        const activity = 'Buy ,' + 'Store NO : ' + StoreDataFromHomePage.storeNO + " categoty.foodname";
+        const activity = 'Buy ' + 'Store NO : ' + StoreDataFromHomePage.storeNO + " categoty.foodname";
         const deposit = '0';
         const withdraw = getPrice;
         const total = NewMoney;
@@ -403,7 +403,7 @@ router.post('/buy_item',(req ,res ) => {
 
         const storeNO = StoreDataFromHomePage.storeNO;
         const storeOwn = StoreDataFromHomePage.storeOwner;
-        const activity_store = 'Student ID : ' + stuID + ", Buy ," + "FOOD NAME";
+        const activity_store = 'Student ID : ' + stuID + " Buy " + "FOOD NAME";
         const deposit_store = getPrice;
         // const total_store = NewTotal;
 

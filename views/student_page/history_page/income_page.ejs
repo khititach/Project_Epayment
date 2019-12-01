@@ -1,5 +1,5 @@
 <!-- income page -->
-<h1>select date</h1>  
+<h1>เลือกวันที่</h1>  
     <!-- ver.1 -->
 <div class="form-group row">
     <div class='input-group date col-lg-3' id='datepicker'>
@@ -16,27 +16,27 @@
 </div>
 
 
-<h2>Account</h2>
+<h2>ประวัติ</h2>
 <div class="container">
     
 
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
-            <th scope="col">Activity</th>
-            <th scope="col">Deposit</th>
-            <th scope="col">Withdraw</th>
-            <th scope="col">Total</th>
-            <th scope="col">Responsible</th>
+            <th scope="col">วันที่</th>
+            <th scope="col">เวลา</th>
+            <th scope="col">กิจกรรม</th>
+            <th scope="col">จำนวนเงินเข้า</th>
+            <th scope="col">จำนวนเงินออก</th>
+            <th scope="col">คงเหลือ</th>
+            <th scope="col">ชื่อผู้ทำรายการ</th>
             </tr>
         </thead>
         <tbody>
             <% if (historyData == '') {%>
                 <tr>
                     <td colspan="7">
-                        <h3 class="text-center">History not found</h3>
+                        <h3 class="text-center">ไม่พบ ประวัติ</h3>
                         
                     </td>
                 </tr>

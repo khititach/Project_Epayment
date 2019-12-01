@@ -1,3 +1,43 @@
+<h3 class="text-center"> --------- Chart ---------</h3>
+<canvas id="studentIncomeChart" width="400" height="200"></canvas>
+
+<h3 class="text-center"> --------- Chart ---------</h3>
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
+<!-- Chart.js -->
+
+<script>
+
+    
+    function generate_income_chart() {
+        var ctx = document.getElementById('studentIncomeChart');
+        var studentIncomeChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [500, 370, 450, 250, 400, 300],
+                    borderWidth: 5
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+    
+</script>
+
+<!-- ****************** category ****************** -->
+
 <h3 class="text-center"> --------- category show food test v2 ---------</h3>
 <div class="row">
     <div class="col" >
@@ -360,7 +400,7 @@
       </pre>
 <!-- test select radio -->
 
-<script>
+<!-- <script>
     // test select radio
 // var form = document.querySelector("form");
 // var log = document.querySelector("#log");
@@ -495,7 +535,7 @@
     }
 
 
-</script>
+</script> -->
 
 
 
@@ -925,7 +965,7 @@
         <div id="select_div"><a href="#" class="btn btn-primary" id="submit_data">Test</a></div>
         <!-- <div id="select_div"><a href="#" class="btn btn-primary" id="get_data">Get data</a></div> -->
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
     // auto submit ajax
     $(document).ready(function(){
@@ -1128,4 +1168,4 @@
     //         });
 
     //-------------------- post data 2  --------------------------
-</script>
+</script> -->

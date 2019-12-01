@@ -1,0 +1,27 @@
+<div> test Websocket page</div>
+
+<div id="insertTextfromWS"></div>
+
+<button> Send Hello</button>
+
+<script>
+    var sock = new WebSocket("ws://localhost:5001/admin");
+    sock.onopen = (event) => {
+        setTimeout(() => {
+            sock.send("WsClientOpen");
+        },1000);
+    };
+
+    sock.onmessage = (event) => {
+        console.log(event);
+        const data = event.data;
+
+        $('#insertTextfromWS').text(data);
+
+        
+    }
+
+    document.querySelector('button').onclick = () => {
+        sock.send("hello");
+    }
+</script>
